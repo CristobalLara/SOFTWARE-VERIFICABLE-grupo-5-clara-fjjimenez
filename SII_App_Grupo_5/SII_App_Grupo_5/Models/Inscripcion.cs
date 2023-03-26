@@ -24,5 +24,6 @@ namespace SII_App_Grupo_5.Models
         public DateTime FechaInscripcion { get; set; }
         public string Fojas { get; set; }
         public int NumeroInscripcion { get; set; }
+        public ICollection<Persona> Personas { get; set; }
     }
 }

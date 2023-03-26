@@ -9,6 +9,13 @@ namespace SII_App_Grupo_5.Data
 
         }
         public DbSet<Inscripcion> Inscripciones { get; set; }
+        public DbSet<Persona> Personas { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Inscripcion>().ToTable(nameof(Inscripcion))
+                .HasMany(p => p.Personas)
+                .WithMany(i => i.Inscripciones);
+        }
     }
 }
 

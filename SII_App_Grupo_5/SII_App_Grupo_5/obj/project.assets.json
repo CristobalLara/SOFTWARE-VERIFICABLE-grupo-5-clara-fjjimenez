@@ -10517,11 +10517,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
+      "projectUniqueName": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
       "projectName": "SII_App_Grupo_5",
-      "projectPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
+      "projectPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
       "packagesPath": "C:\\Users\\M1911\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SII_App_Grupo_5\\SII_App_Grupo_5\\obj\\",
+      "outputPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

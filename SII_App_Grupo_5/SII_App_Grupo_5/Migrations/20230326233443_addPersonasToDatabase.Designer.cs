@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SII_App_Grupo_5.Data;
 
@@ -11,9 +12,11 @@ using SII_App_Grupo_5.Data;
 namespace SII_App_Grupo_5.Migrations
 {
     [DbContext(typeof(InscriptionsGrupo5DbContext))]
-    partial class InscriptionsGrupo5DbContextModelSnapshot : ModelSnapshot
+    [Migration("20230326233443_addPersonasToDatabase")]
+    partial class addPersonasToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace SII_App_Grupo_5.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("InscripcionPersona", b =>
-                {
-                    b.Property<int>("InscripcionesFolio")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonasRUN")
-                        .HasColumnType("int");
-
-                    b.HasKey("InscripcionesFolio", "PersonasRUN");
-
-                    b.HasIndex("PersonasRUN");
-
-                    b.ToTable("InscripcionPersona");
-                });
 
             modelBuilder.Entity("SII_App_Grupo_5.Models.Inscripcion", b =>
                 {
@@ -75,7 +63,7 @@ namespace SII_App_Grupo_5.Migrations
 
                     b.HasKey("Folio");
 
-                    b.ToTable("Inscripcion", (string)null);
+                    b.ToTable("Inscripciones");
                 });
 
             modelBuilder.Entity("SII_App_Grupo_5.Models.Persona", b =>
@@ -94,21 +82,6 @@ namespace SII_App_Grupo_5.Migrations
                     b.HasKey("RUN");
 
                     b.ToTable("Personas");
-                });
-
-            modelBuilder.Entity("InscripcionPersona", b =>
-                {
-                    b.HasOne("SII_App_Grupo_5.Models.Inscripcion", null)
-                        .WithMany()
-                        .HasForeignKey("InscripcionesFolio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SII_App_Grupo_5.Models.Persona", null)
-                        .WithMany()
-                        .HasForeignKey("PersonasRUN")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
