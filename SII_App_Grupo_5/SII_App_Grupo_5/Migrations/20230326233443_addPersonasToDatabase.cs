@@ -14,13 +14,14 @@ namespace SII_App_Grupo_5.Migrations
                 name: "Personas",
                 columns: table => new
                 {
-                    RUN = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RUN = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Personas", x => x.RUN);
+                    table.PrimaryKey("PK_Personas", x => x.Id);
                 });
         }
 

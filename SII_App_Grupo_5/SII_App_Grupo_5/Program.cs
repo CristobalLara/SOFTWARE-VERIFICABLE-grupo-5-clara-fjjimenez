@@ -21,6 +21,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<InscriptionsGrupo5DbContext>();
+    context.Database.EnsureCreated();
+    DbInitializer.Initialize(context);
+}
+
 app.UseRouting();
 
 app.UseAuthorization();

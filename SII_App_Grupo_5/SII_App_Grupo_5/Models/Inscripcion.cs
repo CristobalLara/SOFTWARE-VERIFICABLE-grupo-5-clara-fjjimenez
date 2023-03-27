@@ -8,6 +8,7 @@ namespace SII_App_Grupo_5.Models
     public class Inscripcion
     {
         [Key]
+        public int Id { get; set; }
         public int Folio { get; set; }
         
         [StringLength(30)]

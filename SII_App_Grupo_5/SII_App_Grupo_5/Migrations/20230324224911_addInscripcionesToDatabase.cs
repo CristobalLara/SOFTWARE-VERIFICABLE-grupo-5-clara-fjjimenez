@@ -15,8 +15,9 @@ namespace SII_App_Grupo_5.Migrations
                 name: "Inscripciones",
                 columns: table => new
                 {
-                    Folio = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1"),
+                    Folio = table.Column<int>(type: "int", nullable: false),
                     NaturalezaEscritura = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Comuna = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Manzana = table.Column<int>(type: "int", nullable: false),
@@ -27,7 +28,7 @@ namespace SII_App_Grupo_5.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inscripciones", x => x.Folio);
+                    table.PrimaryKey("PK_Inscripciones", x => x.Id);
                 });
         }
 
