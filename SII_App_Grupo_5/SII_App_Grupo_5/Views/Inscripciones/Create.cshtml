@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
-<h4>Inscripcion</h4>
+<h4>Inscripción</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,6 +15,7 @@
             <div class="form-group">
                 <label asp-for="NaturalezaEscritura" class="control-label">Seleccionar naturaleza de escritura </label>
                 <select asp-for="NaturalezaEscritura" class="form-control">
+                    <option value="">Seleccione naturaleza: </option>
                     <option value="Compraventa">Compraventa</option>
                     <option value="RegularizacionPatrimonio">Regularización de Patrimonio</option>
                 </select>
@@ -22,32 +23,41 @@
             </div>
             <div class="form-group">
                 <label asp-for="Comuna" class="control-label"></label>
-                <input asp-for="Comuna" class="form-control" />
+                @*
+                Toca acá agregar todas las comunas.
+                Por tema de mostrar usabilidad solo se mostrará un par de comunas
+                *@
+                <select asp-for="Comuna" class="form-control">
+                    <option value="">Seleccione comuna: </option>
+                    <option value="Las Condes">Las Condes</option>
+                    <option value="Providencia">Providencia</option>
+                    <option value="Nunoa">Ñuñoa</option>
+                </select>
                 <span asp-validation-for="Comuna" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Manzana" class="control-label"></label>
-                <input asp-for="Manzana" class="form-control" />
+                <input asp-for="Manzana" class="form-control" placeholder="Ingrese Manzana: "/>
                 <span asp-validation-for="Manzana" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Predio" class="control-label"></label>
-                <input asp-for="Predio" class="form-control" />
+                <input asp-for="Predio" class="form-control" placeholder="Ingrese Predio: "/>
                 <span asp-validation-for="Predio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaInscripcion" class="control-label"></label>
-                <input asp-for="FechaInscripcion" class="form-control" />
+                <input asp-for="FechaInscripcion" class="form-control" placeholder="Ingrese Fecha de Inscripción"/>
                 <span asp-validation-for="FechaInscripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Fojas" class="control-label"></label>
-                <input asp-for="Fojas" class="form-control" />
+                <input asp-for="Fojas" class="form-control" placeholder="Ingrese Fojas, de no tener indeique 0"/>
                 <span asp-validation-for="Fojas" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroInscripcion" class="control-label"></label>
-                <input asp-for="NumeroInscripcion" class="form-control" />
+                <input asp-for="NumeroInscripcion" class="form-control" placeholder="Ingrese Número de Inscrippcion" />
                 <span asp-validation-for="NumeroInscripcion" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Folio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NaturalezaEscritura)
+                Naturaleza de la Escritura
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comuna)
@@ -28,13 +28,13 @@
                 @Html.DisplayNameFor(model => model.Predio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaInscripcion)
+                Fecha de Inscripciones
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Fojas)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroInscripcion)
+                Número de Inscrippción
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Folio)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
@@ -67,9 +67,7 @@
                 @Html.DisplayFor(modelItem => item.NumeroInscripcion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Folio">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Folio">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Folio">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Folio">Details</a>
             </td>
         </tr>
 }
