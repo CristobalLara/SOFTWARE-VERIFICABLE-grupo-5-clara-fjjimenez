@@ -11,6 +11,6 @@ namespace SII_App_Grupo_5.Models
         [Required]
         [StringLength(50)]
         public string Nombre { get; set; }
-        public ICollection<Inscripcion> Inscripciones { get; set; }
+        public virtual ICollection<Inscripcion> Inscripciones { get; set; }
     }
 }

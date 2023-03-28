@@ -27,6 +27,12 @@ namespace SII_App_Grupo_5.Data
             };
             context.Personas.AddRange(cristo);
 
+            var francisco = new Persona
+            {
+                RUN = 191341171,
+                Nombre = "Francisco"
+            };
+
             var propiedad = new Inscripcion
             {
                 Folio = 1,
@@ -40,6 +46,21 @@ namespace SII_App_Grupo_5.Data
                 FechaInscripcion = DateTime.Now
             };
             context.Inscripciones.AddRange(propiedad);
+
+            var multiPropietario = new MultiPropietario
+            {
+                Comuna = "Vitacura",
+                Manzana = 131,
+                Predio = 051,
+                Propietario = "19134117-1",
+                PorcentajeDerecho = 20,
+                Fojas = "Foja 1",
+                AnoInscripcion = 2023,
+                FechaInscripcion = DateTime.Now,
+                NumeroInscripcion = 1,
+                AnoVigenciaInicial = 2023
+            };
+            context.MultiPropietarios.AddRange(multiPropietario);
 
             context.SaveChanges();
         }

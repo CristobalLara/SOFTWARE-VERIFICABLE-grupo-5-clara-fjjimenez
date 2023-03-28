@@ -8,8 +8,13 @@ namespace SII_App_Grupo_5.Data
         {
 
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies(); // Enable lazy loading
+        }
         public DbSet<Inscripcion> Inscripciones { get; set; }
         public DbSet<Persona> Personas { get; set; }
+        public DbSet<MultiPropietario> MultiPropietarios { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Inscripcion>().ToTable(nameof(Inscripcion))

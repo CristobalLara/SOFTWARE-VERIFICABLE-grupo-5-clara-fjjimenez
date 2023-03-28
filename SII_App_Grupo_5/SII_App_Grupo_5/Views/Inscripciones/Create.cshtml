@@ -13,8 +13,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="NaturalezaEscritura" class="control-label"></label>
-                <input asp-for="NaturalezaEscritura" class="form-control" />
+                <label asp-for="NaturalezaEscritura" class="control-label">Seleccionar naturaleza de escritura </label>
+                <select asp-for="NaturalezaEscritura" class="form-control">
+                    <option value="Compraventa">Compraventa</option>
+                    <option value="RegularizacionPatrimonio">Regularización de Patrimonio</option>
+                </select>
                 <span asp-validation-for="NaturalezaEscritura" class="text-danger"></span>
             </div>
             <div class="form-group">
