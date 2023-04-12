@@ -37,7 +37,7 @@ namespace SII_App_Grupo_5.Controllers
         {
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
