@@ -32,6 +32,7 @@ namespace SII_App_Grupo_5.Data
                 RUN = 191341171,
                 Nombre = "Francisco"
             };
+            context.Personas.AddRange(francisco);
 
             var propiedad = new Inscripcion
             {
