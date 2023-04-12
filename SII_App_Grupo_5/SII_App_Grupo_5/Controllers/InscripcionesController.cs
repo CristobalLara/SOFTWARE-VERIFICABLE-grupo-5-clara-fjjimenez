@@ -27,7 +27,8 @@ namespace SII_App_Grupo_5.Controllers
 
         public IActionResult Details(int Id)
         {
-            return View(contexto.Inscripciones.Find(Id));
+            var inscripcion = contexto.Inscripciones.FirstOrDefault(i => i.Id == Id);
+            return View(inscripcion);
         }
 
 
