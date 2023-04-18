@@ -12,8 +12,8 @@ using SII_App_Grupo_5.Data;
 namespace SII_App_Grupo_5.Migrations
 {
     [DbContext(typeof(InscriptionsGrupo5DbContext))]
-    [Migration("20230328050353_changeMultiPropietario")]
-    partial class changeMultiPropietario
+    [Migration("20230418011925_addNewModelToDatabase")]
+    partial class addNewModelToDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,28 +28,67 @@ namespace SII_App_Grupo_5.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InscripcionPersona", b =>
-                {
-                    b.Property<int>("InscripcionesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InscripcionesId", "PersonasId");
-
-                    b.HasIndex("PersonasId");
-
-                    b.ToTable("InscripcionPersona");
-                });
-
-            modelBuilder.Entity("SII_App_Grupo_5.Models.Inscripcion", b =>
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Adquiriente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Acreditado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("InscripcionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PorcentajeDerecho")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rut")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InscripcionId");
+
+                    b.ToTable("Adquirientes");
+                });
+
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Enajenante", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Acreditado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("InscripcionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PorcentajeDerecho")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rut")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InscripcionId");
+
+                    b.ToTable("Enajenantes");
+                });
+
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Inscripcion", b =>
+                {
+                    b.Property<int>("Folio")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Folio"));
 
                     b.Property<string>("Comuna")
                         .IsRequired()
@@ -59,11 +98,7 @@ namespace SII_App_Grupo_5.Migrations
                     b.Property<DateTime>("FechaInscripcion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Fojas")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Folio")
+                    b.Property<int>("Fojas")
                         .HasColumnType("int");
 
                     b.Property<int>("Manzana")
@@ -77,14 +112,12 @@ namespace SII_App_Grupo_5.Migrations
                     b.Property<int>("NumeroInscripcion")
                         .HasColumnType("int");
 
-                    b.Property<string>("Predio")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Predio")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Folio");
 
-                    b.ToTable("Inscripcion", (string)null);
+                    b.ToTable("Inscripciones");
                 });
 
             modelBuilder.Entity("SII_App_Grupo_5.Models.MultiPropietario", b =>
@@ -136,40 +169,33 @@ namespace SII_App_Grupo_5.Migrations
                     b.ToTable("MultiPropietarios");
                 });
 
-            modelBuilder.Entity("SII_App_Grupo_5.Models.Persona", b =>
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Adquiriente", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("SII_App_Grupo_5.Models.Inscripcion", "Inscripcion")
+                        .WithMany("Adquirientes")
+                        .HasForeignKey("InscripcionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("RUN")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Personas");
+                    b.Navigation("Inscripcion");
                 });
 
-            modelBuilder.Entity("InscripcionPersona", b =>
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Enajenante", b =>
                 {
-                    b.HasOne("SII_App_Grupo_5.Models.Inscripcion", null)
-                        .WithMany()
-                        .HasForeignKey("InscripcionesId")
+                    b.HasOne("SII_App_Grupo_5.Models.Inscripcion", "Inscripcion")
+                        .WithMany("Enajenantes")
+                        .HasForeignKey("InscripcionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SII_App_Grupo_5.Models.Persona", null)
-                        .WithMany()
-                        .HasForeignKey("PersonasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Inscripcion");
+                });
+
+            modelBuilder.Entity("SII_App_Grupo_5.Models.Inscripcion", b =>
+                {
+                    b.Navigation("Adquirientes");
+
+                    b.Navigation("Enajenantes");
                 });
 #pragma warning restore 612, 618
         }

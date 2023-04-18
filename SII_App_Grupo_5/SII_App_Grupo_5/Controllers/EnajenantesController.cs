@@ -10,87 +10,90 @@ using SII_App_Grupo_5.Models;
 
 namespace SII_App_Grupo_5.Controllers
 {
-    public class InscripcionesController : Controller
+    public class EnajenantesController : Controller
     {
         private readonly InscriptionsGrupo5DbContext _context;
 
-        public InscripcionesController(InscriptionsGrupo5DbContext context)
+        public EnajenantesController(InscriptionsGrupo5DbContext context)
         {
             _context = context;
         }
 
-        // GET: Inscripciones
+        // GET: Enajenantes
         public async Task<IActionResult> Index()
         {
-              return _context.Inscripciones != null ? 
-                          View(await _context.Inscripciones.ToListAsync()) :
-                          Problem("Entity set 'InscriptionsGrupo5DbContext.Inscripciones'  is null.");
+            var inscriptionsGrupo5DbContext = _context.Enajenantes.Include(e => e.Inscripcion);
+            return View(await inscriptionsGrupo5DbContext.ToListAsync());
         }
 
-        // GET: Inscripciones/Details/5
+        // GET: Enajenantes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Inscripciones == null)
+            if (id == null || _context.Enajenantes == null)
             {
                 return NotFound();
             }
 
-            var inscripcion = await _context.Inscripciones
-                .FirstOrDefaultAsync(m => m.Folio == id);
-            if (inscripcion == null)
+            var enajenante = await _context.Enajenantes
+                .Include(e => e.Inscripcion)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (enajenante == null)
             {
                 return NotFound();
             }
 
-            return View(inscripcion);
+            return View(enajenante);
         }
 
-        // GET: Inscripciones/Create
+        // GET: Enajenantes/Create
         public IActionResult Create()
         {
+            ViewData["InscripcionId"] = new SelectList(_context.Inscripciones, "Folio", "Comuna");
             return View();
         }
 
-        // POST: Inscripciones/Create
+        // POST: Enajenantes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Folio,NaturalezaEscritura,Comuna,Manzana,Predio,FechaInscripcion,Fojas,NumeroInscripcion")] Inscripcion inscripcion)
+        public async Task<IActionResult> Create([Bind("Id,InscripcionId,Rut,PorcentajeDerecho,Acreditado")] Enajenante enajenante)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(inscripcion);
+                _context.Add(enajenante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(inscripcion);
+            ViewData["InscripcionId"] = new SelectList(_context.Inscripciones, "Folio", "Comuna", enajenante.InscripcionId);
+            return View(enajenante);
         }
 
-        // GET: Inscripciones/Edit/5
+        // GET: Enajenantes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Inscripciones == null)
+            if (id == null || _context.Enajenantes == null)
             {
                 return NotFound();
             }
 
-            var inscripcion = await _context.Inscripciones.FindAsync(id);
-            if (inscripcion == null)
+            var enajenante = await _context.Enajenantes.FindAsync(id);
+            if (enajenante == null)
             {
                 return NotFound();
             }
-            return View(inscripcion);
+            ViewData["InscripcionId"] = new SelectList(_context.Inscripciones, "Folio", "Comuna", enajenante.InscripcionId);
+            return View(enajenante);
         }
 
-        // POST: Inscripciones/Edit/5
+        // POST: Enajenantes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Folio,NaturalezaEscritura,Comuna,Manzana,Predio,FechaInscripcion,Fojas,NumeroInscripcion")] Inscripcion inscripcion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,InscripcionId,Rut,PorcentajeDerecho,Acreditado")] Enajenante enajenante)
         {
-            if (id != inscripcion.Folio)
+            if (id != enajenante.Id)
             {
                 return NotFound();
             }
@@ -99,12 +102,12 @@ namespace SII_App_Grupo_5.Controllers
             {
                 try
                 {
-                    _context.Update(inscripcion);
+                    _context.Update(enajenante);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InscripcionExists(inscripcion.Folio))
+                    if (!EnajenanteExists(enajenante.Id))
                     {
                         return NotFound();
                     }
@@ -115,49 +118,51 @@ namespace SII_App_Grupo_5.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(inscripcion);
+            ViewData["InscripcionId"] = new SelectList(_context.Inscripciones, "Folio", "Comuna", enajenante.InscripcionId);
+            return View(enajenante);
         }
 
-        // GET: Inscripciones/Delete/5
+        // GET: Enajenantes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Inscripciones == null)
+            if (id == null || _context.Enajenantes == null)
             {
                 return NotFound();
             }
 
-            var inscripcion = await _context.Inscripciones
-                .FirstOrDefaultAsync(m => m.Folio == id);
-            if (inscripcion == null)
+            var enajenante = await _context.Enajenantes
+                .Include(e => e.Inscripcion)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (enajenante == null)
             {
                 return NotFound();
             }
 
-            return View(inscripcion);
+            return View(enajenante);
         }
 
-        // POST: Inscripciones/Delete/5
+        // POST: Enajenantes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Inscripciones == null)
+            if (_context.Enajenantes == null)
             {
-                return Problem("Entity set 'InscriptionsGrupo5DbContext.Inscripciones'  is null.");
+                return Problem("Entity set 'InscriptionsGrupo5DbContext.Enajenantes'  is null.");
             }
-            var inscripcion = await _context.Inscripciones.FindAsync(id);
-            if (inscripcion != null)
+            var enajenante = await _context.Enajenantes.FindAsync(id);
+            if (enajenante != null)
             {
-                _context.Inscripciones.Remove(inscripcion);
+                _context.Enajenantes.Remove(enajenante);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InscripcionExists(int id)
+        private bool EnajenanteExists(int id)
         {
-          return (_context.Inscripciones?.Any(e => e.Folio == id)).GetValueOrDefault();
+          return (_context.Enajenantes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

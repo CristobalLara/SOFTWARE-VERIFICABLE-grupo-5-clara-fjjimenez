@@ -12,14 +12,20 @@ namespace SII_App_Grupo_5.Data
         {
             optionsBuilder.UseLazyLoadingProxies(); // Enable lazy loading
         }
+        public DbSet<Enajenante> Enajenantes { get; set; }
+        public DbSet<Adquiriente> Adquirientes { get; set; }
         public DbSet<Inscripcion> Inscripciones { get; set; }
-        public DbSet<Persona> Personas { get; set; }
         public DbSet<MultiPropietario> MultiPropietarios { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Inscripcion>().ToTable(nameof(Inscripcion))
-                .HasMany(p => p.Personas)
-                .WithMany(i => i.Inscripciones);
+            modelBuilder.Entity<Enajenante>()
+                .HasOne(e => e.Inscripcion)
+                .WithMany(i => i.Enajenantes)
+                .HasForeignKey(e => e.InscripcionId);
+            modelBuilder.Entity<Adquiriente>()
+                .HasOne(e => e.Inscripcion)
+                .WithMany(i => i.Adquirientes)
+                .HasForeignKey(e => e.InscripcionId);
         }
     }
 }

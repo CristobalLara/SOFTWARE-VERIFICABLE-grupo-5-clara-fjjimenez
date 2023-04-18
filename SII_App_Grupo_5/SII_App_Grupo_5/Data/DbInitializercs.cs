@@ -10,39 +10,18 @@ namespace SII_App_Grupo_5.Data
     {
         public static void Initialize(InscriptionsGrupo5DbContext context)
         {
-            if (context.Personas.Any())
+            if (context.Inscripciones.Any())
             {
                 return;   // DB has been seeded
             }
-            else if (context.Inscripciones.Any())
-            {
-                return;   // DB has been seeded
-            }
-
-
-            var cristo = new Persona
-            {
-                RUN = 191894359,
-                Nombre = "Cristo"
-            };
-            context.Personas.AddRange(cristo);
-
-            var francisco = new Persona
-            {
-                RUN = 191341171,
-                Nombre = "Francisco"
-            };
-            context.Personas.AddRange(francisco);
 
             var propiedad = new Inscripcion
             {
-                Folio = 1,
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Macul",
                 Manzana = 1,
-                Predio = "CuadroVerde",
-                Personas = new List<Persona> { cristo },
-                Fojas = "Foja 1",
+                Predio = 2,
+                Fojas = 3,
                 NumeroInscripcion = 1,
                 FechaInscripcion = DateTime.Now
             };

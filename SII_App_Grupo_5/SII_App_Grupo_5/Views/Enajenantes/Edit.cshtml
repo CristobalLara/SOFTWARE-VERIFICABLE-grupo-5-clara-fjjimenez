@@ -1,0 +1,49 @@
+﻿@model SII_App_Grupo_5.Models.Enajenante
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Enajenante</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="InscripcionId" class="control-label"></label>
+                <select asp-for="InscripcionId" class="form-control" asp-items="ViewBag.InscripcionId"></select>
+                <span asp-validation-for="InscripcionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rut" class="control-label"></label>
+                <input asp-for="Rut" class="form-control" />
+                <span asp-validation-for="Rut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PorcentajeDerecho" class="control-label"></label>
+                <input asp-for="PorcentajeDerecho" class="form-control" />
+                <span asp-validation-for="PorcentajeDerecho" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Acreditado" /> @Html.DisplayNameFor(model => model.Acreditado)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

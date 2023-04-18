@@ -8,7 +8,6 @@ namespace SII_App_Grupo_5.Models
     public class Inscripcion
     {
         [Key]
-        public int Id { get; set; }
         public int Folio { get; set; }
         
         [StringLength(30)]
@@ -20,11 +19,12 @@ namespace SII_App_Grupo_5.Models
         [Required]
         public int Manzana { get; set; }
         [Required]
-        [StringLength(50)]
-        public string Predio { get; set; }
+        public int Predio { get; set; }
         public DateTime FechaInscripcion { get; set; }
-        public string Fojas { get; set; }
+        public int Fojas { get; set; }
         public int NumeroInscripcion { get; set; }
-        public virtual ICollection<Persona> Personas { get; set; }
+        virtual public List<Enajenante> Enajenantes { get; set; }
+        virtual public List<Adquiriente> Adquirientes { get; set; }
+
     }
 }
