@@ -21,7 +21,7 @@ namespace SII_App_Grupo_5.Data
                 Comuna = "Macul",
                 Manzana = 1,
                 Predio = 2,
-                Fojas = 3,
+                Fojas = 0,
                 NumeroInscripcion = 1,
                 FechaInscripcion = DateTime.Now
             };

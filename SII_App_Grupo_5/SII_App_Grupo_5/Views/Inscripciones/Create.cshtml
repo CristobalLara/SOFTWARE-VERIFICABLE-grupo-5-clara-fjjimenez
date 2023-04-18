@@ -14,27 +14,40 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NaturalezaEscritura" class="control-label"></label>
-                <input asp-for="NaturalezaEscritura" class="form-control" />
+                <select asp-for="NaturalezaEscritura" class="form-control">
+                    <option value="">Seleccione naturaleza: </option>
+                    <option value="Compraventa">Compraventa</option>
+                    <option value="RegularizacionPatrimonio">Regularización de Patrimonio</option>
+                </select>
                 <span asp-validation-for="NaturalezaEscritura" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Comuna" class="control-label"></label>
-                <input asp-for="Comuna" class="form-control" />
+                @*
+                Toca acá agregar todas las comunas.
+                Por tema de mostrar usabilidad solo se mostrará un par de comunas
+                *@
+                <select asp-for="Comuna" class="form-control">
+                    <option value="">Seleccione comuna: </option>
+                    <option value="Las Condes">Las Condes</option>
+                    <option value="Providencia">Providencia</option>
+                    <option value="Nunoa">Ñuñoa</option>
+                </select>
                 <span asp-validation-for="Comuna" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Manzana" class="control-label"></label>
-                <input asp-for="Manzana" class="form-control" />
+                <input asp-for="Manzana" class="form-control" placeholder="Ingrese Manzana: " />
                 <span asp-validation-for="Manzana" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Predio" class="control-label"></label>
-                <input asp-for="Predio" class="form-control" />
+                <input asp-for="Predio" class="form-control" placeholder="Ingrese Predio: " />
                 <span asp-validation-for="Predio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaInscripcion" class="control-label"></label>
-                <input asp-for="FechaInscripcion" class="form-control" />
+                <input asp-for="FechaInscripcion" class="form-control" placeholder="Ingrese Fecha de Inscripción" />
                 <span asp-validation-for="FechaInscripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
