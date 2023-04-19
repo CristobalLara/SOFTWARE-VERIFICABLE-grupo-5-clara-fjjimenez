@@ -33,9 +33,20 @@ namespace SII_App_Grupo_5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Inscripcion inscripcion)
+        public IActionResult Create(Inscripcion inscripcion, int[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado)
         {
             contexto.Inscripciones.AddRange(inscripcion);
+            contexto.SaveChanges();
+
+            for (int i = 0; i < AdquirientesRut.Count(); i++)
+            {
+                Adquiriente adquiriente = new Adquiriente();
+                adquiriente.Rut = AdquirientesRut[i];
+                adquiriente.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
+                adquiriente.Acreditado = AdquirientesAcreditado[i];
+                adquiriente.InscripcionId = inscripcion.Folio;
+                contexto.Adquirientes.AddRange(adquiriente);
+            }
             contexto.SaveChanges();
             return RedirectToAction("Index");
         }
