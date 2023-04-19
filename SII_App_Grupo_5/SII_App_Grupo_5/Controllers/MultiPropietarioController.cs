@@ -16,5 +16,21 @@ namespace SII_App_Grupo_5.Controllers
             IEnumerable<MultiPropietario> multiPropietarios = contexto.MultiPropietarios.ToList();
             return View(multiPropietarios);
         }
+        [HttpPost]
+        public IActionResult Index(string search)
+        {
+            int searchInt;
+            bool isInt = int.TryParse(search, out searchInt);
+
+            var multiPropietarios = contexto.MultiPropietarios
+                .Where(i => i.Comuna.Contains(search)
+                        || (isInt && i.Manzana.ToString().Contains(search))
+                        || (isInt && i.Predio.ToString().Contains(search))
+                        || (isInt && i.AnoVigenciaInicial.ToString().Contains(search))
+                        || (isInt && i.AnoVigenciaFinal.ToString().Contains(search)))
+                .ToList();
+
+            return View(multiPropietarios);
+        }
     }
 }
