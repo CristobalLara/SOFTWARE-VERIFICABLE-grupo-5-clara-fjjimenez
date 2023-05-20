@@ -16,6 +16,7 @@ namespace SII_App_Grupo_5.Data
         public DbSet<Adquiriente> Adquirientes { get; set; }
         public DbSet<Inscripcion> Inscripciones { get; set; }
         public DbSet<MultiPropietario> MultiPropietarios { get; set; }
+        public DbSet<Enajenante> Comuna { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Enajenante>()

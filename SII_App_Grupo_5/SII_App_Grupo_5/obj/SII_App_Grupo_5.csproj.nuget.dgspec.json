@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\FJJI\\Documents\\GitHub\\BlueLockAI\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj": {}
+    "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj": {}
   },
   "projects": {
-    "C:\\Users\\FJJI\\Documents\\GitHub\\BlueLockAI\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj": {
+    "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\FJJI\\Documents\\GitHub\\BlueLockAI\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
+        "projectUniqueName": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
         "projectName": "SII_App_Grupo_5",
-        "projectPath": "C:\\Users\\FJJI\\Documents\\GitHub\\BlueLockAI\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
-        "packagesPath": "C:\\Users\\FJJI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\FJJI\\Documents\\GitHub\\BlueLockAI\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\obj\\",
+        "projectPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
+        "packagesPath": "C:\\Users\\M1911\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\FJJI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\M1911\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
