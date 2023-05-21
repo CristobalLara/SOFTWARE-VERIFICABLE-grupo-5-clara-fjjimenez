@@ -10,6 +10,7 @@ namespace SII_App_Grupo_5.Data
     {
         public static void Initialize(InscriptionsGrupo5DbContext context)
         {
+
             if (context.Inscripciones.Any())
             {
                 return;   // DB has been seeded
@@ -41,6 +42,34 @@ namespace SII_App_Grupo_5.Data
                 AnoVigenciaInicial = 2023
             };
             context.MultiPropietarios.AddRange(multiPropietario);
+
+            List<String> ListaComunas = new List<String>()
+                    {
+                        //Región Metropolitana
+                        "Santiago", "Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia",
+                        "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo","Lo Prado",
+                        "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal",
+                        "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Vitacura",
+
+                        //Región de Valparaíso
+                        "Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua",
+                        "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar",
+                        "Quillota", "Calera", "Hijuelas", "La Cruz","Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo",
+                        "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache",
+                        "Olmué",
+
+                        //Resto de comunas no se agregan de momento
+                    };
+
+            foreach (String comunaNombre in ListaComunas)
+            {
+                var comuna = new Comuna
+                {
+                    Nombre = comunaNombre,
+                };
+                context.Comunas.AddRange(comuna);
+            };
+
 
             context.SaveChanges();
         }

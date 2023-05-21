@@ -850,8 +850,6 @@ C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-f
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\SII_App_Grupo_5.pdb
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\SII_App_Grupo_5.genruntimeconfig.cache
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\ref\SII_App_Grupo_5.dll
-C:\Users\FJJI\Documents\GitHub\BlueLockAI\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\FJJI\Documents\GitHub\BlueLockAI\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\appsettings.json
 C:\Users\FJJI\Documents\GitHub\BlueLockAI\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.staticwebassets.runtime.json
 C:\Users\FJJI\Documents\GitHub\BlueLockAI\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.exe
 C:\Users\FJJI\Documents\GitHub\BlueLockAI\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.deps.json
