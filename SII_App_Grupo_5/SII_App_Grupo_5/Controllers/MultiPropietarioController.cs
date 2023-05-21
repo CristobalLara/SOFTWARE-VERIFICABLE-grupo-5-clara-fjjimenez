@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SII_App_Grupo_5.Models;
 using SII_App_Grupo_5.Data;
+using SII_App_Grupo_5.Models;
 
 namespace SII_App_Grupo_5.Controllers
 {

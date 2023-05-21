@@ -25,15 +25,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Comuna" class="control-label"></label>
-                @*
-                Toca acá agregar todas las comunas.
-                Por tema de mostrar usabilidad solo se mostrará un par de comunas
-                *@
                 <select asp-for="Comuna" class="form-control">
-                    <option value="">Seleccione comuna: </option>
-                    <option value="Las Condes">Las Condes</option>
-                    <option value="Providencia">Providencia</option>
-                    <option value="Nunoa">Ñuñoa</option>
+                    @foreach (var comuna in ViewBag.Comunas)
+                    {
+                        <option value="@comuna.Nombre">@comuna.Nombre </option>
+                    }
                 </select>
                 <span asp-validation-for="Comuna" class="text-danger"></span>
             </div>

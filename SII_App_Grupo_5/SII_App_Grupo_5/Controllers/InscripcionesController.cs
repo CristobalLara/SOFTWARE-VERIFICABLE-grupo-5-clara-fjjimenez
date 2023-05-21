@@ -20,6 +20,7 @@ namespace SII_App_Grupo_5.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Comunas = contexto.Comunas;
             //cargar run , cruzo por id
             return View();
         }
