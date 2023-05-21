@@ -9,9 +9,9 @@ namespace SII_App_Grupo_5.Models
         public String Comuna { get; set; }
         public int Manzana { get; set; }
         public int Predio { get; set; }
-        public string Propietario { get; set; }
+        public string RutPropietario { get; set; }
         public int PorcentajeDerecho { get; set; }
-        public string Fojas { get; set; }
+        public int Fojas { get; set; }
         public int AnoInscripcion { get; set; }
         public int NumeroInscripcion { get; set; }
         public DateTime FechaInscripcion { get; set; }

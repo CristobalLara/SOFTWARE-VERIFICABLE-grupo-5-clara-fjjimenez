@@ -117,7 +117,7 @@
             .attr("type", "text")
             .attr("name", "AdquirientesPorcentajeDerecho")
             .val(adquiriente.PorcentajeDerecho);
-        porcentajeDerechoInput.on("input", function () {s
+        porcentajeDerechoInput.on("input", function () {
             var inputValue = $(this).val();
             if (!isNumeric(inputValue)) {
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
@@ -140,9 +140,7 @@
         adquirienteDiv.append(acreditadoLabel, "<br>", acreditadoInput);
 
         $("#adquirientesContainer").append(adquirienteDiv);
-        function isNumeric(value) {
-            return /^\d+$/.test(value);
-        }
+
         adquirientes.push(adquiriente);
 }
     function agregarEnajenante() {
@@ -179,7 +177,6 @@
             .attr("name", "EnajenantesPorcentajeDerecho")
             .val(enajenante.PorcentajeDerecho);
         porcentajeDerechoInput.on("input", function () {
-            s
             var inputValue = $(this).val();
             if (!isNumeric(inputValue)) {
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
@@ -202,9 +199,7 @@
         enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput);
 
         $("#enajenantesContainer").append(enajenanteDiv);
-        function isNumeric(value) {
-            return /^\d+$/.test(value);
-        }
+
         enajenantes.push(enajenante);
     }
 </script>

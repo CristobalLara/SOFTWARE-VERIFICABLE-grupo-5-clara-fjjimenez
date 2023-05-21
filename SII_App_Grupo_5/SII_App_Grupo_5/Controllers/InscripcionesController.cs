@@ -34,11 +34,16 @@ namespace SII_App_Grupo_5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Inscripcion inscripcion, int[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
-        int[] EnajenantesRut, int[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
+        public IActionResult Create(Inscripcion inscripcion, string[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
+        string[] EnajenantesRut, int[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
         {
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
+
+            List<Inscripcion> inscripciones = contexto.Inscripciones.ToList();
+            List<Enajenante> enajenantes = contexto.Enajenantes.ToList();
+            List<Adquiriente> adquirientes = contexto.Adquirientes.ToList();
+
 
             for (int i = 0; i < AdquirientesRut.Count(); i++)
             {
@@ -48,8 +53,30 @@ namespace SII_App_Grupo_5.Controllers
                 adquiriente.Acreditado = AdquirientesAcreditado[i];
                 adquiriente.InscripcionId = inscripcion.Folio;
                 contexto.Adquirientes.AddRange(adquiriente);
+
+
+                MultiPropietario multipropietario = new MultiPropietario();
+                multipropietario.RutPropietario = AdquirientesRut[i];
+                multipropietario.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
+                multipropietario.Fojas = inscripcion.Fojas;
+                multipropietario.NumeroInscripcion = inscripcion.NumeroInscripcion;
+                multipropietario.FechaInscripcion = inscripcion.FechaInscripcion;
+                multipropietario.AnoInscripcion = inscripcion.FechaInscripcion.Year;
+                if (inscripcion.FechaInscripcion <= new DateTime(2019, 1, 1))
+                {
+                    multipropietario.AnoVigenciaInicial = new DateTime(2019, 1, 1).Year;
+                }
+                else
+                {
+                    multipropietario.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
+                }
+
+                multipropietario.AnoVigenciaFinal = null;
+                multipropietario.Comuna = inscripcion.Comuna;
+                multipropietario.Manzana = inscripcion.Manzana;
+                multipropietario.Predio = inscripcion.Predio;
+                contexto.MultiPropietarios.AddRange(multipropietario);
             }
-            var a = EnajenantesRut.Count();
 
             for (int i = 0; i < EnajenantesRut.Count(); i++)
             {

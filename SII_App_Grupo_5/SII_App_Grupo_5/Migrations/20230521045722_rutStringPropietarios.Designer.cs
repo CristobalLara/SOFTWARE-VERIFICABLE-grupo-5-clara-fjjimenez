@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SII_App_Grupo_5.Data;
 
@@ -11,9 +12,11 @@ using SII_App_Grupo_5.Data;
 namespace SII_App_Grupo_5.Migrations
 {
     [DbContext(typeof(InscriptionsGrupo5DbContext))]
-    partial class InscriptionsGrupo5DbContextModelSnapshot : ModelSnapshot
+    [Migration("20230521045722_rutStringPropietarios")]
+    partial class rutStringPropietarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,8 +163,9 @@ namespace SII_App_Grupo_5.Migrations
                     b.Property<DateTime>("FechaInscripcion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Fojas")
-                        .HasColumnType("int");
+                    b.Property<string>("Fojas")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Manzana")
                         .HasColumnType("int");
