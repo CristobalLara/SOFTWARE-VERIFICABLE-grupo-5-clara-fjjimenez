@@ -54,7 +54,6 @@ namespace SII_App_Grupo_5.Controllers
                 adquiriente.InscripcionId = inscripcion.Folio;
                 contexto.Adquirientes.AddRange(adquiriente);
 
-
                 MultiPropietario multipropietario = new MultiPropietario();
                 multipropietario.RutPropietario = AdquirientesRut[i];
                 multipropietario.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
@@ -86,6 +85,12 @@ namespace SII_App_Grupo_5.Controllers
                 enajenante.Acreditado = EnajenantesAcreditado[i];
                 enajenante.InscripcionId = inscripcion.Folio;
                 contexto.Enajenantes.AddRange(enajenante);
+            }
+
+            List<MultiPropietario> multipropietarios = contexto.MultiPropietarios.OrderBy(mp => mp.AnoInscripcion).ThenBy(mp => mp.NumeroInscripcion).ToList();
+            for (int i = 0; i < multipropietarios.Count(); i++)
+            {
+
             }
             contexto.SaveChanges();
             return RedirectToAction("Index");

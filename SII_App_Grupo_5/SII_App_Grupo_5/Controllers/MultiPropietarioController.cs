@@ -13,7 +13,7 @@ namespace SII_App_Grupo_5.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<MultiPropietario> multiPropietarios = contexto.MultiPropietarios.ToList();
+            IEnumerable<MultiPropietario> multiPropietarios = contexto.MultiPropietarios.OrderBy(mp => mp.FechaInscripcion).ToList();
             return View(multiPropietarios);
         }
         [HttpPost]
