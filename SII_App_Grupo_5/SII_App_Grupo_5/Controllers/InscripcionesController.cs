@@ -33,7 +33,8 @@ namespace SII_App_Grupo_5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Inscripcion inscripcion, int[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado)
+        public IActionResult Create(Inscripcion inscripcion, int[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
+        int[] EnajenantesRut, int[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
         {
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
@@ -46,6 +47,17 @@ namespace SII_App_Grupo_5.Controllers
                 adquiriente.Acreditado = AdquirientesAcreditado[i];
                 adquiriente.InscripcionId = inscripcion.Folio;
                 contexto.Adquirientes.AddRange(adquiriente);
+            }
+            var a = EnajenantesRut.Count();
+
+            for (int i = 0; i < EnajenantesRut.Count(); i++)
+            {
+                Enajenante enajenante = new Enajenante();
+                enajenante.Rut = EnajenantesRut[i];
+                enajenante.PorcentajeDerecho = EnajenantesPorcentajeDerecho[i];
+                enajenante.Acreditado = EnajenantesAcreditado[i];
+                enajenante.InscripcionId = inscripcion.Folio;
+                contexto.Enajenantes.AddRange(enajenante);
             }
             contexto.SaveChanges();
             return RedirectToAction("Index");

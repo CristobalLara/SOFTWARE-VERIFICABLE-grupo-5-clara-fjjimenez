@@ -282,8 +282,6 @@ C:\Users\M1911\Desktop\Software Verificable\SII_App_Grupo_5\SII_App_Grupo_5\bin\
 C:\Users\M1911\Desktop\Software Verificable\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\M1911\Desktop\Software Verificable\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\M1911\Desktop\Software Verificable\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\appsettings.json
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.staticwebassets.runtime.json
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.exe
 C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\SII_App_Grupo_5.deps.json

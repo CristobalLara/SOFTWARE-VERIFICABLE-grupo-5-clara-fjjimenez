@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Create";
     var adquirientes = ViewData["adquirientesModel"] as Adquiriente;
+    var enajenates = ViewData["enajenatesModel"] as Enajenante;
 }
 
 <h1>Create</h1>
@@ -67,13 +68,16 @@
             <div id="adquirientesContainer">
             <!-- aquí se agregarán los campos para cada enajenante -->
             </div>
-
-            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            <!-- campos para crear una nueva inscripción -->
+            <button type="button" onclick="agregarEnajenante()">Agregar Enajenante</button>
+            <div id="enajenantesContainer">
+            <!-- aquí se agregarán los campos para cada enajenante -->
         </form>
     </div>
+</div>
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
 </div>
 
 <div>
@@ -82,6 +86,8 @@
 
 <script>
     var adquirientes = [];
+    var enajenantes = [];
+
     function agregarAdquiriente() {
 
         var index = $("#adquirientesContainer").children().length;
@@ -143,4 +149,66 @@
         }
         adquirientes.push(adquiriente);
 }
+    function agregarEnajenante() {
+
+        var index = $("#enajenantesContainer").children().length;
+
+        var enajenante = {
+            Id: 0,
+            Rut: 0,
+            PorcentajeDerecho: 0,
+            Acreditado: true,
+            InscripcionId: 0
+        };
+        var enajenanteDiv = $("<div>");
+
+        var rutLabel = $("<label>")
+            .text("Rut del Enajenante\n");
+        var rutInput = $("<input>")
+            .attr("type", "text")
+            .attr("name", "EnajenantesRut")
+            .val(enajenante.Rut);
+        rutInput.on("input", function () {
+            var inputValue = $(this).val();
+            if (!isNumeric(inputValue)) {
+                $(this).val(inputValue.replace(/[^0-9]/g, ''));
+            }
+        });
+        enajenanteDiv.append(rutLabel, "<br>", rutInput);
+
+        var porcentajeDerechoLabel = $("<label>")
+            .text("Porcentaje Derecho\n");
+        var porcentajeDerechoInput = $("<input>")
+            .attr("type", "text")
+            .attr("name", "EnajenantesPorcentajeDerecho")
+            .val(enajenante.PorcentajeDerecho);
+        porcentajeDerechoInput.on("input", function () {
+            s
+            var inputValue = $(this).val();
+            if (!isNumeric(inputValue)) {
+                $(this).val(inputValue.replace(/[^0-9]/g, ''));
+            }
+        });
+        enajenanteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput);
+
+        var acreditadoLabel = $("<label>")
+            .text("Acreditado");
+        var acreditadoInput = $("<select>")
+            .attr("name", "EnajenantesAcreditado");
+        var optionTrue = $("<option>")
+            .attr("value", true)
+            .text("Acreditado");
+        acreditadoInput.append(optionTrue);
+        var optionFalse = $("<option>")
+            .attr("value", false)
+            .text("No Acreditado");
+        acreditadoInput.append(optionFalse);
+        enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput);
+
+        $("#enajenantesContainer").append(enajenanteDiv);
+        function isNumeric(value) {
+            return /^\d+$/.test(value);
+        }
+        enajenantes.push(enajenante);
+    }
 </script>
