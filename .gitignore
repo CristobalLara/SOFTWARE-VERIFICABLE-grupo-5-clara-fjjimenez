@@ -366,3 +366,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Controllers/HomeController.cs
 *.cache
+SII_App_Grupo_5/SII_App_Grupo_5/appsettings.json
