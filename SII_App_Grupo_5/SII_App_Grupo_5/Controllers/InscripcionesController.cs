@@ -73,7 +73,6 @@ namespace SII_App_Grupo_5.Controllers
             {
                 if (AdquirientesPorcentajeDerecho.Sum() == 100)
                 {
-                    
                     for (int i = 0; i < EnajenantesRut.Count(); i++)
                     {
                         List<MultiPropietario> multipropietariosEnajenantes = contexto.MultiPropietarios.
@@ -89,6 +88,7 @@ namespace SII_App_Grupo_5.Controllers
                                 if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
                                 {
                                     contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[j]);
+                                    break;
                                 }
                                 else
                                 {
@@ -96,6 +96,26 @@ namespace SII_App_Grupo_5.Controllers
                                 }
                                 
                             }
+                        }
+                    }
+                }
+                else if (AdquirientesPorcentajeDerecho.Sum() < 100 && EnajenantesRut.Count() == 1 && AdquirientesRut.Count() == 1)
+                {
+                    List<MultiPropietario> multipropietariosEnajenantes = contexto.MultiPropietarios.
+                    OrderBy(mp => mp.AnoInscripcion).
+                    ThenBy(mp => mp.NumeroInscripcion).
+                    Where(mp => mp.RutPropietario == EnajenantesRut[0] && mp.AnoVigenciaFinal == null).ToList();
+                    for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
+                    {
+                        if (multipropietariosEnajenantes[j].Comuna == inscripcion.Comuna &&
+                            multipropietariosEnajenantes[j].Manzana == inscripcion.Manzana &&
+                            multipropietariosEnajenantes[j].Predio == inscripcion.Predio)
+                        {
+                            float Derechos = multipropietariosEnajenantes[j].PorcentajeDerecho * 
+                                               (EnajenantesPorcentajeDerecho[0] / 100) * 
+                                               (AdquirientesPorcentajeDerecho[0] / 100);
+                            AdquirientesPorcentajeDerecho[0] = Derechos;
+                            multipropietariosEnajenantes[j].PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho - Derechos;
                         }
                     }
                 }

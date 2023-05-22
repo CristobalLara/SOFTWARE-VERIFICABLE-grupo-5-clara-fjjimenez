@@ -30,11 +30,11 @@ namespace SII_App_Grupo_5.Data
 
             var multiPropietario = new MultiPropietario
             {
-                Comuna = "Vitacura",
-                Manzana = 131,
-                Predio = 051,
-                RutPropietario = "19134117-1",
-                PorcentajeDerecho = 20,
+                Comuna = "Santiago",
+                Manzana = 1,
+                Predio = 1,
+                RutPropietario = "1",
+                PorcentajeDerecho = 100,
                 Fojas = 1,
                 AnoInscripcion = 2023,
                 FechaInscripcion = DateTime.Now,
