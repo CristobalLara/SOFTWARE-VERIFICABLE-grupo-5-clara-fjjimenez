@@ -80,6 +80,7 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 <script>
     var adquirientes = [];
     var enajenantes = [];
@@ -98,7 +99,7 @@
         var adquirienteDiv = $("<div>");
 
         var rutLabel = $("<label>")
-            .text("Rut del Adquiriente\n");
+            .text("Rut del Adquiriente "+ (index+1) +"\n");
         var rutInput = $("<input>")
             .attr("type", "text")
             .attr("name", "AdquirientesRut")
@@ -109,7 +110,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        adquirienteDiv.append(rutLabel, "<br>", rutInput);
+        adquirienteDiv.append(rutLabel, "<br>", rutInput,"<br>");
 
         var porcentajeDerechoLabel = $("<label>")
             .text("Porcentaje Derecho\n");
@@ -123,7 +124,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        adquirienteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput);
+        adquirienteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput,"<br>");
 
         var acreditadoLabel = $("<label>")
             .text("Acreditado");
@@ -137,7 +138,7 @@
             .attr("value", false)
             .text("No Acreditado");
         acreditadoInput.append(optionFalse);
-        adquirienteDiv.append(acreditadoLabel, "<br>", acreditadoInput);
+        adquirienteDiv.append(acreditadoLabel, "<br>", acreditadoInput,"<br>");
 
         $("#adquirientesContainer").append(adquirienteDiv);
 
@@ -157,7 +158,7 @@
         var enajenanteDiv = $("<div>");
 
         var rutLabel = $("<label>")
-            .text("Rut del Enajenante\n");
+            .text("Rut del Enajenante " + (index) +"\n");
         var rutInput = $("<input>")
             .attr("type", "text")
             .attr("name", "EnajenantesRut")
@@ -168,7 +169,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        enajenanteDiv.append(rutLabel, "<br>", rutInput);
+        enajenanteDiv.append(rutLabel, "<br>", rutInput,"<br>");
 
         var porcentajeDerechoLabel = $("<label>")
             .text("Porcentaje Derecho\n");
@@ -182,7 +183,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        enajenanteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput);
+        enajenanteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput,"<br>");
 
         var acreditadoLabel = $("<label>")
             .text("Acreditado");
@@ -196,10 +197,12 @@
             .attr("value", false)
             .text("No Acreditado");
         acreditadoInput.append(optionFalse);
-        enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput);
+        enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput,"<br>");
 
         $("#enajenantesContainer").append(enajenanteDiv);
 
         enajenantes.push(enajenante);
     }
+
 </script>
+

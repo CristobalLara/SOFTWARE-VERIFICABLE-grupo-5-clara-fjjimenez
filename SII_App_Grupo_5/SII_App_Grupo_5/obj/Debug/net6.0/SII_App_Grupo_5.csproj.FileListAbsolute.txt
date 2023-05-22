@@ -1428,3 +1428,10 @@ C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_
 C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\SII_App_Grupo_5.pdb
 C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\SII_App_Grupo_5.genruntimeconfig.cache
 C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\obj\Debug\net6.0\ref\SII_App_Grupo_5.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.Mvc.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.Razor.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.Helpers.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

@@ -189,6 +189,13 @@ namespace SII_App_Grupo_5.Controllers
                 return View();
             }
 
+            if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio" && listaEnajenantes.Count() > 0)
+            {
+                ModelState.AddModelError(string.Empty, "Regularizacion de Patrimonio no usa Enajenantes");
+                ViewBag.Comunas = contexto.Comunas;
+                return View();
+            }
+
             contexto.SaveChanges();
             return RedirectToAction("Index");
         }
