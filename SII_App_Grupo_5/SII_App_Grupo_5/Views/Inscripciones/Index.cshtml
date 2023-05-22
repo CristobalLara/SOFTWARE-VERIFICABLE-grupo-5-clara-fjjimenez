@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Inscripciones</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -51,9 +51,10 @@
     <tbody>
 @foreach (var item in Model) {
     if(item.Enajenantes.Count()>0){
+
+        @foreach (var enajenante in item.Enajenantes)
+        {
         <tr>
-            @foreach (var enajenante in item.Enajenantes)
-            {
             <td>
                 @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
             </td>
@@ -87,13 +88,14 @@
             <td>
                 Enajenante
             </td>
-            }
         </tr>
+        }
     }
     if(item.Adquirientes.Count()>0){
+        
+        @foreach (var adquiriente in item.Adquirientes)
+        {
         <tr>
-            @foreach (var adquiriente in item.Adquirientes)
-            {
             <td>
                     @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
             </td>
@@ -127,8 +129,9 @@
             <td>
                 Adquiriente
             </td>
-            }
         </tr>
+        }
+        
     }
     if(item.Adquirientes.Count()==0 && item.Enajenantes.Count()==0){
         <tr>
