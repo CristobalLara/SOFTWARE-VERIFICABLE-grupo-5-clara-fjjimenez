@@ -44,6 +44,32 @@ namespace SII_App_Grupo_5.Controllers
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
 
+            for (int i = 0; i < AdquirientesRut.Count(); i++)
+            {
+                Adquiriente adquiriente = new Adquiriente();
+                adquiriente.Rut = AdquirientesRut[i];
+                adquiriente.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
+                adquiriente.Acreditado = AdquirientesAcreditado[i];
+                adquiriente.InscripcionId = inscripcion.Folio;
+                if (!adquiriente.Acreditado)
+                {
+                    adquiriente.PorcentajeDerecho = 0;
+                }
+                listaAdquirientes.Add(adquiriente);
+                contexto.Adquirientes.AddRange(adquiriente);
+            }
+
+            for (int i = 0; i < EnajenantesRut.Count(); i++)
+            {
+                Enajenante enajenante = new Enajenante();
+                enajenante.Rut = EnajenantesRut[i];
+                enajenante.PorcentajeDerecho = EnajenantesPorcentajeDerecho[i];
+                enajenante.Acreditado = EnajenantesAcreditado[i];
+                enajenante.InscripcionId = inscripcion.Folio;
+                listaEnajenantes.Add(enajenante);
+                contexto.Enajenantes.AddRange(enajenante);
+            }
+
             float TotalPorcentajeDerecho = 100;
             int AdquirientesNoAcreditados = 0;
 
@@ -126,18 +152,6 @@ namespace SII_App_Grupo_5.Controllers
 
             for (int i = 0; i < AdquirientesRut.Count(); i++)
             {
-                Adquiriente adquiriente = new Adquiriente();
-                adquiriente.Rut = AdquirientesRut[i];
-                adquiriente.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
-                adquiriente.Acreditado = AdquirientesAcreditado[i];
-                adquiriente.InscripcionId = inscripcion.Folio;
-                if (!adquiriente.Acreditado)
-                {
-                    adquiriente.PorcentajeDerecho = 0;
-                }
-                listaAdquirientes.Add(adquiriente);
-                contexto.Adquirientes.AddRange(adquiriente);
-
                 MultiPropietario multipropietario = new MultiPropietario();
                 multipropietario.RutPropietario = AdquirientesRut[i];
                 multipropietario.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
@@ -159,17 +173,6 @@ namespace SII_App_Grupo_5.Controllers
                 multipropietario.Manzana = inscripcion.Manzana;
                 multipropietario.Predio = inscripcion.Predio;
                 contexto.MultiPropietarios.AddRange(multipropietario);
-            }
-
-            for (int i = 0; i < EnajenantesRut.Count(); i++)
-            {
-                Enajenante enajenante = new Enajenante();
-                enajenante.Rut = EnajenantesRut[i];
-                enajenante.PorcentajeDerecho = EnajenantesPorcentajeDerecho[i];
-                enajenante.Acreditado = EnajenantesAcreditado[i];
-                enajenante.InscripcionId = inscripcion.Folio;
-                listaEnajenantes.Add(enajenante);
-                contexto.Enajenantes.AddRange(enajenante);
             }
 
             float sumaPorcAdquirientes = listaAdquirientes.Sum(p => p.PorcentajeDerecho);
