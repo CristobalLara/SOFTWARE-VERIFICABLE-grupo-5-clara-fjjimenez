@@ -41,10 +41,34 @@ namespace SII_App_Grupo_5.Controllers
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
 
-            List<Inscripcion> inscripciones = contexto.Inscripciones.ToList();
-            List<Enajenante> enajenantes = contexto.Enajenantes.ToList();
-            List<Adquiriente> adquirientes = contexto.Adquirientes.ToList();
-            
+            float TotalPorcentajeDerecho = 100;
+            int AdquirientesNoAcreditados = 0;
+
+            if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio")
+            {
+                for (int i = 0; i < AdquirientesAcreditado.Count(); i++)
+                {
+                    if (AdquirientesAcreditado[i])
+                    {
+                        TotalPorcentajeDerecho = TotalPorcentajeDerecho - AdquirientesPorcentajeDerecho[i];
+                    }
+                    else
+                    {
+                        AdquirientesNoAcreditados++;
+                    }
+                }
+
+                float ParcialPorcentajeDerecho = TotalPorcentajeDerecho / AdquirientesNoAcreditados;
+                
+                for (int j = 0; j < AdquirientesAcreditado.Count(); j++)
+                {
+                    if (!AdquirientesAcreditado[j])
+                    {
+                        AdquirientesPorcentajeDerecho[j] = ParcialPorcentajeDerecho;
+                    }
+                }
+            }
+
             if (inscripcion.NaturalezaEscritura == "Compraventa")
             {
                 if (AdquirientesPorcentajeDerecho.Sum() == 100)
