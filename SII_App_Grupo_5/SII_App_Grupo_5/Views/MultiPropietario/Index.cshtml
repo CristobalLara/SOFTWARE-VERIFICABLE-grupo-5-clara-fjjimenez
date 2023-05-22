@@ -7,8 +7,27 @@
 <h1>Multipropietario</h1>
 
 <form asp-controller="MultiPropietario" asp-action="Index" method="post">
-    <input type="text" name="search" placeholder="Search..." class="form-control" />
-    <button type="submit" class="btn btn-primary">Search</button>
+    <field class='text' style="display: flex">
+        <label for="searchComuna">Comuna: </label>
+        <input type="text" name="searchComuna" placeholder="Search..." class="form-control" id="searchComuna" />
+    </field>
+    <field class='text' style="display: flex">
+        <label for="searchManzana">Manzana: </label>
+        <input type="text" name="searchManzana" placeholder="Search..." class="form-control" id="searchManzana" />
+    </field>
+    <field class='text' style="display: flex">
+        <label for="searchPredio">Predio: </label>
+        <input type="text" name="searchPredio" placeholder="Search..." class="form-control" id="searchPredio" />
+    </field>
+    <field class='text' style="display: flex">
+        <label for="searchAnoVigenciaInicial">Año Vigencia Inicial: </label>
+        <input type="text" name="searchAnoVigenciaInicial" placeholder="Search..." class="form-control" id="searchAnoVigenciaInicial" />
+    </field>
+    <field class='text' style="display: flex">
+        <label for="searchAnoVigenciaFinal">Año Vigencia Final</label>
+        <input type="text" name="searchAnoVigenciaFinal" placeholder="Search..." class="form-control" id="searchAnoVigenciaFinal" />
+    </field>
+    <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
 
 

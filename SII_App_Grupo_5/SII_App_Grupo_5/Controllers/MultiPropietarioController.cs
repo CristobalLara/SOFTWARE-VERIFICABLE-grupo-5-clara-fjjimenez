@@ -17,18 +17,42 @@ namespace SII_App_Grupo_5.Controllers
             return View(multiPropietarios);
         }
         [HttpPost]
-        public IActionResult Index(string search)
+        public IActionResult Index(string searchComuna, string searchManzana, string searchPredio, 
+            string searchAnoVigenciaInicial, string searchAnoVigenciaFinal)
         {
-            int searchInt;
-            bool isInt = int.TryParse(search, out searchInt);
+            int searchComunaInt, searchManzanaInt, searchPredioInt, searchAnoVigenciaInicialInt, searchAnoVigenciaFinalInt;
 
-            var multiPropietarios = contexto.MultiPropietarios
-                .Where(i => i.Comuna.Contains(search)
-                        || (isInt && i.Manzana.ToString().Contains(search))
-                        || (isInt && i.Predio.ToString().Contains(search))
-                        || (isInt && i.AnoVigenciaInicial.ToString().Contains(search))
-                        || (isInt && i.AnoVigenciaFinal.ToString().Contains(search)))
-                .ToList();
+            bool isIntManzana = int.TryParse(searchManzana, out searchManzanaInt);
+            bool isIntPredio = int.TryParse(searchPredio, out searchPredioInt);
+            bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out searchAnoVigenciaInicialInt);
+            bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out searchAnoVigenciaFinalInt);
+
+            var multiPropietarios = contexto.MultiPropietarios.ToList();
+            if (searchComuna != null)
+            {
+                 multiPropietarios = multiPropietarios
+                .Where(i => (i.Comuna.Contains(searchComuna))).ToList();
+            }
+            if (isIntManzana)
+            {
+                multiPropietarios = multiPropietarios
+               .Where(i => (isIntManzana && i.Manzana.ToString().Contains(searchManzana))).ToList();
+            }
+            if (isIntPredio)
+            {
+                multiPropietarios = multiPropietarios
+               .Where(i => (isIntPredio && i.Predio.ToString().Contains(searchPredio))).ToList();
+            }
+            if (isIntAVI)
+            {
+                multiPropietarios = multiPropietarios
+               .Where(i => (i.AnoVigenciaInicial.ToString().Contains(searchAnoVigenciaInicial))).ToList();
+            }
+            if (isIntAVF)
+            {
+                multiPropietarios = multiPropietarios
+               .Where(i => (i.AnoVigenciaFinal.ToString().Contains(searchAnoVigenciaFinal))).ToList();
+            }
 
             return View(multiPropietarios);
         }
