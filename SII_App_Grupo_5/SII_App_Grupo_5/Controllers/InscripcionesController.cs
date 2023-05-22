@@ -2,6 +2,7 @@
 using SII_App_Grupo_5.Models;
 using SII_App_Grupo_5.Data;
 using System.Diagnostics.Metrics;
+using System.Linq;
 
 namespace SII_App_Grupo_5.Controllers
 {
@@ -34,8 +35,8 @@ namespace SII_App_Grupo_5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Inscripcion inscripcion, string[] AdquirientesRut, int[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
-        string[] EnajenantesRut, int[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
+        public IActionResult Create(Inscripcion inscripcion, string[] AdquirientesRut, float[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
+        string[] EnajenantesRut, float[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
         {
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
@@ -43,7 +44,38 @@ namespace SII_App_Grupo_5.Controllers
             List<Inscripcion> inscripciones = contexto.Inscripciones.ToList();
             List<Enajenante> enajenantes = contexto.Enajenantes.ToList();
             List<Adquiriente> adquirientes = contexto.Adquirientes.ToList();
-
+            
+            if (inscripcion.NaturalezaEscritura == "Compraventa")
+            {
+                if (AdquirientesPorcentajeDerecho.Sum() == 100)
+                {
+                    
+                    for (int i = 0; i < EnajenantesRut.Count(); i++)
+                    {
+                        List<MultiPropietario> multipropietariosEnajenantes = contexto.MultiPropietarios.
+                        OrderBy(mp => mp.AnoInscripcion).
+                        ThenBy(mp => mp.NumeroInscripcion).
+                        Where(mp => mp.RutPropietario==EnajenantesRut[i]).ToList();
+                        for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
+                        {
+                            if (multipropietariosEnajenantes[j].Comuna == inscripcion.Comuna &&
+                                multipropietariosEnajenantes[j].Manzana == inscripcion.Manzana && 
+                                multipropietariosEnajenantes[j].Predio == inscripcion.Predio)
+                            {
+                                if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
+                                {
+                                    contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[j]);
+                                }
+                                else
+                                {
+                                    multipropietariosEnajenantes[j].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
 
             for (int i = 0; i < AdquirientesRut.Count(); i++)
             {
@@ -87,11 +119,6 @@ namespace SII_App_Grupo_5.Controllers
                 contexto.Enajenantes.AddRange(enajenante);
             }
 
-            List<MultiPropietario> multipropietarios = contexto.MultiPropietarios.OrderBy(mp => mp.AnoInscripcion).ThenBy(mp => mp.NumeroInscripcion).ToList();
-            for (int i = 0; i < multipropietarios.Count(); i++)
-            {
-
-            }
             contexto.SaveChanges();
             return RedirectToAction("Index");
         }

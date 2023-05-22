@@ -10,7 +10,7 @@ namespace SII_App_Grupo_5.Models
         public int Manzana { get; set; }
         public int Predio { get; set; }
         public string RutPropietario { get; set; }
-        public int PorcentajeDerecho { get; set; }
+        public float PorcentajeDerecho { get; set; }
         public int Fojas { get; set; }
         public int AnoInscripcion { get; set; }
         public int NumeroInscripcion { get; set; }
