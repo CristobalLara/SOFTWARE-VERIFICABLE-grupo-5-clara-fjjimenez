@@ -11,8 +11,11 @@ namespace SII_App_Grupo_5.Controllers
         {
             contexto = Contexto;
         }
+
         public IActionResult Index()
         {
+            ViewBag.Comunas = contexto.Comunas;
+
             IEnumerable<MultiPropietario> multiPropietarios = contexto.MultiPropietarios.OrderBy(mp => mp.FechaInscripcion).ToList();
             return View(multiPropietarios);
         }
@@ -53,7 +56,7 @@ namespace SII_App_Grupo_5.Controllers
                 multiPropietarios = multiPropietarios
                .Where(i => (i.AnoVigenciaFinal.ToString().Contains(searchAnoVigenciaFinal))).ToList();
             }
-
+            ViewBag.Comunas = contexto.Comunas;
             return View(multiPropietarios);
         }
     }

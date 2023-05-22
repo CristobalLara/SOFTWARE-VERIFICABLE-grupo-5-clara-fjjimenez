@@ -7,9 +7,15 @@
 <h1>Multipropietario</h1>
 
 <form asp-controller="MultiPropietario" asp-action="Index" method="post">
-    <field class='text' style="display: flex">
-        <label for="searchComuna">Comuna: </label>
-        <input type="text" name="searchComuna" placeholder="Search..." class="form-control" id="searchComuna" />
+    <field class="text" style="display: flex">
+        <label for="searchComuna">Comuna:</label>
+        <select name="searchComuna" class="form-control" id="searchComuna">
+            <option value="">Seleccione una comuna</option>
+            @foreach (var comuna in ViewBag.Comunas)
+            {
+                <option name="searchComuna" value="@comuna.Nombre">@comuna.Nombre</option>
+            }
+        </select>
     </field>
     <field class='text' style="display: flex">
         <label for="searchManzana">Manzana: </label>
