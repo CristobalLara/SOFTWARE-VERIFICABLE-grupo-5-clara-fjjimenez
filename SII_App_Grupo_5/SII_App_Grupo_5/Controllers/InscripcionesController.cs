@@ -38,6 +38,9 @@ namespace SII_App_Grupo_5.Controllers
         public IActionResult Create(Inscripcion inscripcion, string[] AdquirientesRut, float[] AdquirientesPorcentajeDerecho, bool[] AdquirientesAcreditado,
         string[] EnajenantesRut, float[] EnajenantesPorcentajeDerecho, bool[] EnajenantesAcreditado)
         {
+            List<Adquiriente> listaAdquirientes = new List<Adquiriente>();
+            List<Enajenante> listaEnajenantes = new List<Enajenante>();
+
             contexto.Inscripciones.AddRange(inscripcion);
             contexto.SaveChanges();
 
@@ -128,6 +131,11 @@ namespace SII_App_Grupo_5.Controllers
                 adquiriente.PorcentajeDerecho = AdquirientesPorcentajeDerecho[i];
                 adquiriente.Acreditado = AdquirientesAcreditado[i];
                 adquiriente.InscripcionId = inscripcion.Folio;
+                if (!adquiriente.Acreditado)
+                {
+                    adquiriente.PorcentajeDerecho = 0;
+                }
+                listaAdquirientes.Add(adquiriente);
                 contexto.Adquirientes.AddRange(adquiriente);
 
                 MultiPropietario multipropietario = new MultiPropietario();
@@ -160,7 +168,25 @@ namespace SII_App_Grupo_5.Controllers
                 enajenante.PorcentajeDerecho = EnajenantesPorcentajeDerecho[i];
                 enajenante.Acreditado = EnajenantesAcreditado[i];
                 enajenante.InscripcionId = inscripcion.Folio;
+                listaEnajenantes.Add(enajenante);
                 contexto.Enajenantes.AddRange(enajenante);
+            }
+
+            float sumaPorcAdquirientes = listaAdquirientes.Sum(p => p.PorcentajeDerecho);
+            float sumaPorcEnajenantes = listaEnajenantes.Sum(p => p.PorcentajeDerecho);
+
+            if (sumaPorcAdquirientes > 100)
+            {
+                ModelState.AddModelError(string.Empty, "La Suma de los porcentajes de derecho para los Adquirientes no puede pasar el 100%");
+                ViewBag.Comunas = contexto.Comunas;
+                return View();
+            }
+
+            if (sumaPorcEnajenantes > 100)
+            {
+                ModelState.AddModelError(string.Empty, "La Suma de los porcentajes de derecho para los Enajenantes no puede pasar el 100%");
+                ViewBag.Comunas = contexto.Comunas;
+                return View();
             }
 
             contexto.SaveChanges();
