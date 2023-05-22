@@ -3,8 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-#Server for each pc
-*./appsettings.json
 
 # User-specific files
 *.rsuser
@@ -366,4 +364,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /Controllers/HomeController.cs
 *.cache
-SII_App_Grupo_5/SII_App_Grupo_5/appsettings.json
+SII_App_Grupo_5/SII_App_Grupo_5/obj/Debug/net6.0/apphost.exe
+SII_App_Grupo_5/SII_App_Grupo_5/obj/Debug/net6.0/SII_App_Grupo_5.assets.cache
+SII_App_Grupo_5/SII_App_Grupo_5/obj/Debug/net6.0/SII_App_Grupo_5.GeneratedMSBuildEditorConfig.editorconfig

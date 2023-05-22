@@ -5,104 +5,105 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SII_App_Grupo_5
 build_property.RootNamespace = SII_App_Grupo_5
-build_property.ProjectDir = C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\
+build_property.ProjectDir = C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\M1911\Desktop\Software Verificable\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5
+build_property.MSBuildProjectDirectory = C:\Users\FJJI\Documents\GitHub\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\SII_App_Grupo_5\SII_App_Grupo_5
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Create.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRxdWlyaWVudGVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Delete.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRxdWlyaWVudGVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Details.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRxdWlyaWVudGVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Edit.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRxdWlyaWVudGVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Index.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Adquirientes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRxdWlyaWVudGVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Create.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5hamVuYW50ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Delete.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5hamVuYW50ZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Details.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5hamVuYW50ZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Edit.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5hamVuYW50ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Index.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Enajenantes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5hamVuYW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Home/Index.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Home/Privacy.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Create.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcGNpb25lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Delete.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcGNpb25lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Details.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcGNpb25lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Edit.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcGNpb25lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Index.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Inscripciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5zY3JpcGNpb25lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/MultiPropietario/Index.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/MultiPropietario/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVsdGlQcm9waWV0YXJpb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/Error.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/_ViewImports.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/_ViewStart.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/M1911/Desktop/Software Verificable/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/_Layout.cshtml]
+[C:/Users/FJJI/Documents/GitHub/SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez/SII_App_Grupo_5/SII_App_Grupo_5/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3ftdldqj99
