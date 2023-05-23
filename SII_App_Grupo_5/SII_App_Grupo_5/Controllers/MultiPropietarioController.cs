@@ -6,31 +6,31 @@ namespace SII_App_Grupo_5.Controllers
 {
     public class MultiPropietarioController : Controller
     {
-        public InscriptionsGrupo5DbContext contexto;
-        public MultiPropietarioController(InscriptionsGrupo5DbContext Contexto)
+        public InscriptionsGrupo5DbContext _contexto;
+        public MultiPropietarioController(InscriptionsGrupo5DbContext contexto)
         {
-            contexto = Contexto;
+            _contexto = contexto;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Comunas = contexto.Comunas;
+            ViewBag.Comunas = _contexto.Comunas;
 
-            IEnumerable<MultiPropietario> multiPropietarios = contexto.MultiPropietarios.OrderBy(mp => mp.FechaInscripcion).ToList();
+            IEnumerable<MultiPropietario> multiPropietarios = _contexto.MultiPropietarios.OrderBy(mp => mp.FechaInscripcion).ToList();
             return View(multiPropietarios);
         }
         [HttpPost]
         public IActionResult Index(string searchComuna, string searchManzana, string searchPredio, 
             string searchAnoVigenciaInicial, string searchAnoVigenciaFinal)
         {
-            int searchComunaInt, searchManzanaInt, searchPredioInt, searchAnoVigenciaInicialInt, searchAnoVigenciaFinalInt;
+            int searchManzanaInt, searchPredioInt, searchAnoVigenciaInicialInt, searchAnoVigenciaFinalInt;
 
             bool isIntManzana = int.TryParse(searchManzana, out searchManzanaInt);
             bool isIntPredio = int.TryParse(searchPredio, out searchPredioInt);
             bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out searchAnoVigenciaInicialInt);
             bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out searchAnoVigenciaFinalInt);
 
-            var multiPropietarios = contexto.MultiPropietarios.ToList();
+            var multiPropietarios = _contexto.MultiPropietarios.ToList();
             if (searchComuna != null)
             {
                  multiPropietarios = multiPropietarios
@@ -56,7 +56,7 @@ namespace SII_App_Grupo_5.Controllers
                 multiPropietarios = multiPropietarios
                .Where(i => (i.AnoVigenciaFinal.ToString().Contains(searchAnoVigenciaFinal))).ToList();
             }
-            ViewBag.Comunas = contexto.Comunas;
+            ViewBag.Comunas = _contexto.Comunas;
             return View(multiPropietarios);
         }
     }
