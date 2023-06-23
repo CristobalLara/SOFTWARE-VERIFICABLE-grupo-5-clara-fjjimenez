@@ -114,14 +114,12 @@
         var porcentajeDerechoLabel = $("<label>")
             .text("Porcentaje Derecho\n");
         var porcentajeDerechoInput = $("<input>")
-            .attr("type", "text")
+            .attr("type", "number")
             .attr("name", "AdquirientesPorcentajeDerecho")
+            .attr("step", 0.001)
             .val(adquiriente.PorcentajeDerecho);
         porcentajeDerechoInput.on("input", function () {
             var inputValue = $(this).val();
-            if (!isNumeric(inputValue)) {
-                $(this).val(inputValue.replace(/[^0-9]/g, ''));
-            }
         });
         adquirienteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput,"<br>");
 
