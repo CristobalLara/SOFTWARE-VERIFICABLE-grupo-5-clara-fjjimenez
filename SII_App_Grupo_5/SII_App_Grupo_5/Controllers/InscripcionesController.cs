@@ -37,47 +37,26 @@ namespace SII_App_Grupo_5.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Inscripcion inscripcion, string[] adquirientesRut, string[] adquirientesPorcentajeDerecho, bool[] adquirientesAcreditado,
-        string[] enajenantesRut, float[] enajenantesPorcentajeDerecho, bool[] enajenantesAcreditado)
+        public IActionResult Create(    Inscripcion inscripcion,
+                                        string[] adquirientesRut, 
+                                        string[] adquirientesPorcentajeDerecho, 
+                                        bool[] adquirientesAcreditado,
+                                        string[] enajenantesRut, 
+                                        string[] enajenantesPorcentajeDerecho, 
+                                        bool[] enajenantesAcreditado)
         {
-            List<float> adquirientesPorcentajeDerechoFloat = new List<float>();
-            foreach (string a in adquirientesPorcentajeDerecho)
-            {
-                adquirientesPorcentajeDerechoFloat.Add(float.Parse(a.Replace(".", ",")));
-            }
 
+            List<float> adquirientesPorcentajeDerechoFloat = PorcentajeStringAFloat(adquirientesPorcentajeDerecho);
+            List<float> enajenantesPorcentajeDerechoFloat = PorcentajeStringAFloat(enajenantesPorcentajeDerecho);
             List<Adquiriente> listaAdquirientes = new List<Adquiriente>();
             List<Enajenante> listaEnajenantes = new List<Enajenante>();
 
             _contexto.Inscripciones.AddRange(inscripcion);
             _contexto.SaveChanges();
 
-            //CREACION DE ADQUIRIENTES DE LA INSCRIPCION
-            for (int i = 0; i < adquirientesRut.Count(); i++)
-            {
-                Adquiriente adquiriente = new Adquiriente();
-                adquiriente.Rut = adquirientesRut[i];
-                adquiriente.PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i];
-                adquiriente.Acreditado = adquirientesAcreditado[i];
-                adquiriente.InscripcionId = inscripcion.Folio;
-                if (!adquiriente.Acreditado)
-                {
-                    adquiriente.PorcentajeDerecho = 0;
-                }
-                listaAdquirientes.Add(adquiriente);
-                _contexto.Adquirientes.AddRange(adquiriente);
-            }
-            //CREACION DE ENAJENANTES DE LA INSCRIPCION
-            for (int i = 0; i < enajenantesRut.Count(); i++)
-            {
-                Enajenante enajenante = new Enajenante();
-                enajenante.Rut = enajenantesRut[i];
-                enajenante.PorcentajeDerecho = enajenantesPorcentajeDerecho[i];
-                enajenante.Acreditado = enajenantesAcreditado[i];
-                enajenante.InscripcionId = inscripcion.Folio;
-                listaEnajenantes.Add(enajenante);
-                _contexto.Enajenantes.AddRange(enajenante);
-            }
+            //CREACION DE LA INSCRIPCION
+            CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
+            CreacionEnajenantes(inscripcion, listaEnajenantes, enajenantesRut, enajenantesPorcentajeDerechoFloat, enajenantesAcreditado);
 
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
@@ -85,27 +64,7 @@ namespace SII_App_Grupo_5.Controllers
             //PROCESANDO REGULARIZACION DE PATRIMONIO
             if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio")
             {
-                for (int i = 0; i < adquirientesAcreditado.Count(); i++)
-                {
-                    if (adquirientesAcreditado[i])
-                    {
-                        totalPorcentajeDerecho = totalPorcentajeDerecho - adquirientesPorcentajeDerechoFloat[i];
-                    }
-                    else
-                    {
-                        adquirientesNoAcreditados++;
-                    }
-                }
-
-                float parcialPorcentajeDerecho = totalPorcentajeDerecho / adquirientesNoAcreditados;
-                
-                for (int j = 0; j < adquirientesAcreditado.Count(); j++)
-                {
-                    if (!adquirientesAcreditado[j])
-                    {
-                        adquirientesPorcentajeDerechoFloat[j] = parcialPorcentajeDerecho;
-                    }
-                }
+                RegularizacionPatrimonio(inscripcion, adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
             }
             //PROCESANDO CASOS DE COMPRAVENTA
             if (inscripcion.NaturalezaEscritura == "Compraventa")
@@ -113,206 +72,17 @@ namespace SII_App_Grupo_5.Controllers
                 //COMPRAVENTA DE TRANSFERENCIA TOTAL
                 if (adquirientesPorcentajeDerechoFloat.Sum() == 100)
                 {
-                    float transferenciaTotal = 0;
-
-                    for (int i = 0; i < enajenantesRut.Count(); i++)
-                    {
-                        List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
-                        OrderBy(mp => mp.AnoInscripcion).
-                        ThenBy(mp => mp.NumeroInscripcion).
-                        Where(mp => mp.RutPropietario == enajenantesRut[i] && mp.AnoVigenciaFinal == null).ToList();
-
-                        if (multipropietariosEnajenantes.IsNullOrEmpty())
-                        {
-                            List<MultiPropietario> multipropietariosReales = _contexto.MultiPropietarios.
-                            OrderBy(mp => mp.AnoInscripcion).
-                            ThenBy(mp => mp.NumeroInscripcion).
-                            Where(mp => mp.Comuna == inscripcion.Comuna && mp.Manzana == inscripcion.Manzana && mp.Predio == inscripcion.Predio
-                            && mp.AnoVigenciaFinal == null).ToList();
-
-                            for (int j = 0; j < multipropietariosReales.Count(); j++)
-                            {
-                                transferenciaTotal = transferenciaTotal + multipropietariosReales[j].PorcentajeDerecho;
-                            }
-
-                            for (int j = 0; j < adquirientesPorcentajeDerecho.Count(); j++)
-                            {
-                                transferenciaTotal = transferenciaTotal + adquirientesPorcentajeDerechoFloat[j];
-                            }
-
-                            if (multipropietariosReales[0].AnoInscripcion == inscripcion.FechaInscripcion.Year)
-                            {
-                                float divisor = transferenciaTotal / 100;
-                                transferenciaTotal = 100;
-
-                                for (int j = 0; j < multipropietariosReales.Count(); j++)
-                                {
-                                    multipropietariosReales[j].PorcentajeDerecho = multipropietariosReales[j].PorcentajeDerecho / divisor;
-                                    transferenciaTotal = transferenciaTotal - multipropietariosReales[j].PorcentajeDerecho;
-                                }
-
-                                for (int k = 0; k < adquirientesPorcentajeDerecho.Count(); k++)
-                                {
-                                    adquirientesPorcentajeDerechoFloat[k] = (float)(transferenciaTotal * (adquirientesPorcentajeDerechoFloat[k] * 0.01));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
-                            {
-                                if (multipropietariosEnajenantes[j].Comuna == inscripcion.Comuna &&
-                                    multipropietariosEnajenantes[j].Manzana == inscripcion.Manzana &&
-                                    multipropietariosEnajenantes[j].Predio == inscripcion.Predio)
-                                {
-                                    transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[j].PorcentajeDerecho;
-                                }
-                                if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
-                                {
-                                    _contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[j]);
-                                    break;
-                                }
-                                else
-                                {
-                                    multipropietariosEnajenantes[j].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year;
-                                    break;
-                                }
-                            }
-
-                            for (int k = 0; k < adquirientesPorcentajeDerecho.Count(); k++)
-                            {
-                                adquirientesPorcentajeDerechoFloat[k] = (float)(transferenciaTotal * (adquirientesPorcentajeDerechoFloat[k] * 0.01));
-                            }
-                        }
-                    }
+                    CompraventaTransferenciaTotal(inscripcion, adquirientesPorcentajeDerechoFloat, enajenantesRut);
                 }
                 //COMPRAVENTA DE DERECHOS
                 else if (adquirientesPorcentajeDerechoFloat.Sum() < 100 && enajenantesRut.Count() == 1 && adquirientesRut.Count() == 1)
                 {
-                    List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
-                    OrderBy(mp => mp.AnoInscripcion).
-                    ThenBy(mp => mp.NumeroInscripcion).
-                    Where(mp => mp.Comuna == inscripcion.Comuna &&
-                                mp.Manzana == inscripcion.Manzana &&
-                                mp.Predio == inscripcion.Predio &&
-                                mp.AnoVigenciaFinal == null).ToList();
-
-                    //MANEJANDO MULTIPROPIETARIOS
-                    for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
-                    {
-                        if(multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
-                        {
-                            if (multipropietariosEnajenantes[j].RutPropietario == enajenantesRut[0])
-                            {
-                                float Derechos = multipropietariosEnajenantes[j].PorcentajeDerecho * (enajenantesPorcentajeDerecho[0] / 100);
-                                multipropietariosEnajenantes[j].PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho - Derechos;
-                                adquirientesPorcentajeDerechoFloat[0] = Derechos;
-                                break;
-                            }   
-                        }
-                        else
-                        {
-                            MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
-
-                            multiPropietarioNuevaVigencia.RutPropietario = multipropietariosEnajenantes[j].RutPropietario;
-                            multiPropietarioNuevaVigencia.PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho;
-                            multiPropietarioNuevaVigencia.Fojas = multipropietariosEnajenantes[j].Fojas;
-                            multiPropietarioNuevaVigencia.NumeroInscripcion = multipropietariosEnajenantes[j].NumeroInscripcion;
-                            multiPropietarioNuevaVigencia.FechaInscripcion = multipropietariosEnajenantes[j].FechaInscripcion;
-                            multiPropietarioNuevaVigencia.AnoInscripcion = multipropietariosEnajenantes[j].FechaInscripcion.Year;
-                            multiPropietarioNuevaVigencia.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
-                            multiPropietarioNuevaVigencia.AnoVigenciaFinal = null;
-                            multiPropietarioNuevaVigencia.Comuna = inscripcion.Comuna;
-                            multiPropietarioNuevaVigencia.Manzana = inscripcion.Manzana;
-                            multiPropietarioNuevaVigencia.Predio = inscripcion.Predio;
-
-                            multipropietariosEnajenantes[j].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
-
-                            if (multipropietariosEnajenantes[j].RutPropietario != enajenantesRut[0])
-                            {
-                                _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                            }
-                            else
-                            {
-                                float Derechos = multiPropietarioNuevaVigencia.PorcentajeDerecho * (enajenantesPorcentajeDerecho[0] / 100);
-                                multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Derechos;
-                                _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                                adquirientesPorcentajeDerechoFloat[0] = Derechos;
-                            }
-                        }
-                    }
+                    CompraventaDerechos(inscripcion, enajenantesRut, adquirientesPorcentajeDerechoFloat, enajenantesPorcentajeDerechoFloat);
                 }
                 //COMPRAVENTA DE DOMINIOS
                 else
                 {
-                    List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
-                    OrderBy(mp => mp.AnoInscripcion).
-                    ThenBy(mp => mp.NumeroInscripcion).
-                    Where(mp => mp.Comuna == inscripcion.Comuna &&
-                                mp.Manzana == inscripcion.Manzana &&
-                                mp.Predio == inscripcion.Predio &&
-                                mp.AnoVigenciaFinal == null).ToList();
-                    
-                    for (int i = 0; i < enajenantesRut.Count(); i++)
-                    {
-                        for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
-                        {
-                            float Dominios = enajenantesPorcentajeDerecho[i];
-                            if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
-                            {
-
-                                if (multipropietariosEnajenantes[j].RutPropietario == enajenantesRut[i])
-                                {
-                                    multipropietariosEnajenantes[j].PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho - Dominios;
-                                    //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
-                                    if (multipropietariosEnajenantes[j].PorcentajeDerecho < 0)
-                                    {
-                                        multipropietariosEnajenantes[j].PorcentajeDerecho = 0;
-                                    }
-                                    break;
-                                }
-
-                            }
-                            else
-                            {
-
-                                MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
-
-                                multiPropietarioNuevaVigencia.RutPropietario = multipropietariosEnajenantes[j].RutPropietario;
-                                multiPropietarioNuevaVigencia.PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho;
-                                multiPropietarioNuevaVigencia.Fojas = multipropietariosEnajenantes[j].Fojas;
-                                multiPropietarioNuevaVigencia.NumeroInscripcion = multipropietariosEnajenantes[j].NumeroInscripcion;
-                                multiPropietarioNuevaVigencia.FechaInscripcion = multipropietariosEnajenantes[j].FechaInscripcion;
-                                multiPropietarioNuevaVigencia.AnoInscripcion = multipropietariosEnajenantes[j].FechaInscripcion.Year;
-                                multiPropietarioNuevaVigencia.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
-                                multiPropietarioNuevaVigencia.AnoVigenciaFinal = null;
-                                multiPropietarioNuevaVigencia.Comuna = inscripcion.Comuna;
-                                multiPropietarioNuevaVigencia.Manzana = inscripcion.Manzana;
-                                multiPropietarioNuevaVigencia.Predio = inscripcion.Predio;
-
-                                multipropietariosEnajenantes[j].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
-
-                                if (multipropietariosEnajenantes[j].RutPropietario != enajenantesRut[i])
-                                {
-                                    _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                                }
-                                else
-                                {
-                                    multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Dominios;
-                                    //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
-                                    if (multiPropietarioNuevaVigencia.PorcentajeDerecho < 0)
-                                    {
-                                        _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                                        _contexto.MultiPropietarios.Remove(multiPropietarioNuevaVigencia);
-                                        continue;
-                                    }
-                                    _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                                }
-                                continue;
-
-                            }
-                        }
-                    }
+                    CompraventaDominios(inscripcion, enajenantesRut, enajenantesPorcentajeDerechoFloat );
                 }
             }
             //CREACION DE MULTIPROPIETARIO
@@ -440,6 +210,263 @@ namespace SII_App_Grupo_5.Controllers
 
             _contexto.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // Funciones Encapsuladoras
+        private List<float> PorcentajeStringAFloat(string[] stringList)
+        {
+            List<float> floatList = new List<float>();
+            foreach (string percentage in stringList)
+            {
+                floatList.Add(float.Parse(percentage.Replace(".", ",")));
+            }
+            return floatList;
+        }
+
+        private void CreacionAdquirientes(   Inscripcion inscripcion, 
+                                            List<Adquiriente> listaAdquirientes, 
+                                            string[] adquirientesRut, 
+                                            List<float> adquirientesPorcentajeDerechoFloat, 
+                                            bool[] adquirientesAcreditado)
+        {
+            for (int i = 0; i < adquirientesRut.Count(); i++)
+            {
+                Adquiriente adquiriente = new Adquiriente();
+                adquiriente.Rut = adquirientesRut[i];
+                adquiriente.PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i];
+                adquiriente.Acreditado = adquirientesAcreditado[i];
+                adquiriente.InscripcionId = inscripcion.Folio;
+                if (!adquiriente.Acreditado)
+                {
+                    adquiriente.PorcentajeDerecho = 0;
+                }
+                listaAdquirientes.Add(adquiriente);
+                _contexto.Adquirientes.AddRange(adquiriente);
+            }
+        }
+
+        private void CreacionEnajenantes(   Inscripcion inscripcion,
+                                            List<Enajenante> listaEnajenantes,
+                                            string[] enajenantesRut,
+                                            List<float> enajenantesPorcentajeDerechoFloat,
+                                            bool[] enajenantesAcreditado)
+        {
+            for (int i = 0; i < enajenantesRut.Count(); i++)
+            {
+                Enajenante enajenante = new Enajenante();
+                enajenante.Rut = enajenantesRut[i];
+                enajenante.PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[i];
+                enajenante.Acreditado = enajenantesAcreditado[i];
+                enajenante.InscripcionId = inscripcion.Folio;
+                listaEnajenantes.Add(enajenante);
+                _contexto.Enajenantes.AddRange(enajenante);
+            }
+        }
+        private void RegularizacionPatrimonio(  Inscripcion inscripcion,
+                                                bool[] adquirientesAcreditado,
+                                                float totalPorcentajeDerecho,
+                                                int adquirientesNoAcreditados,
+                                                List<float> adquirientesPorcentajeDerechoFloat)
+        {
+            for (int i = 0; i < adquirientesAcreditado.Count(); i++)
+            {
+                if (adquirientesAcreditado[i])
+                {
+                    totalPorcentajeDerecho = totalPorcentajeDerecho - adquirientesPorcentajeDerechoFloat[i];
+                }
+                else
+                {
+                    adquirientesNoAcreditados++;
+                }
+            }
+
+            float parcialPorcentajeDerecho = totalPorcentajeDerecho / adquirientesNoAcreditados;
+
+            for (int j = 0; j < adquirientesAcreditado.Count(); j++)
+            {
+                if (!adquirientesAcreditado[j])
+                {
+                    adquirientesPorcentajeDerechoFloat[j] = parcialPorcentajeDerecho;
+                }
+            }
+        }
+        private void CompraventaTransferenciaTotal( Inscripcion inscripcion,
+                                                    List<float> adquirientesPorcentajeDerechoFloat,
+                                                    string[] enajenantesRut)
+        {
+            
+            List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
+            OrderBy(mp => mp.AnoInscripcion).
+            ThenBy(mp => mp.NumeroInscripcion).
+            Where(mp => mp.Comuna == inscripcion.Comuna &&
+                        mp.Manzana == inscripcion.Manzana &&
+                        mp.Predio == inscripcion.Predio &&
+                        mp.AnoVigenciaFinal == null).ToList();
+
+            float transferenciaTotal = 0;
+            bool porBorrar = false;
+            MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
+            for (int i = 0; i < multipropietariosEnajenantes.Count(); i++)
+            {
+                for (int j = 0; j < enajenantesRut.Count(); j++)
+                {
+                    if (multipropietariosEnajenantes[i].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
+                    {
+                        if (multipropietariosEnajenantes[i].RutPropietario == enajenantesRut[j])
+                        {
+                            transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[i].PorcentajeDerecho;
+                            _contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[i]);
+                            break;
+                        }
+                        else
+                        {
+                            multipropietariosEnajenantes[i].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, i);
+
+                        if (enajenantesRut[j] == multipropietariosEnajenantes[i].RutPropietario)
+                        {
+                            porBorrar = true;
+                        }
+                    }
+                }
+                _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                if (porBorrar)
+                {
+                    transferenciaTotal = transferenciaTotal + multiPropietarioNuevaVigencia.PorcentajeDerecho;
+                    _contexto.MultiPropietarios.Remove(multiPropietarioNuevaVigencia);
+                    porBorrar = false;
+                }
+            }
+            for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count(); k++)
+            {
+                adquirientesPorcentajeDerechoFloat[k] = (float)(transferenciaTotal * (adquirientesPorcentajeDerechoFloat[k] * 0.01));
+            }
+        }
+        private void CompraventaDerechos(   Inscripcion inscripcion,
+                                            string[] enajenantesRut,
+                                            List<float> adquirientesPorcentajeDerechoFloat,
+                                            List<float> enajenantesPorcentajeDerechoFloat
+                                            ) 
+        {
+            List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
+                    OrderBy(mp => mp.AnoInscripcion).
+                    ThenBy(mp => mp.NumeroInscripcion).
+                    Where(mp => mp.Comuna == inscripcion.Comuna &&
+                                mp.Manzana == inscripcion.Manzana &&
+                                mp.Predio == inscripcion.Predio &&
+                                mp.AnoVigenciaFinal == null).ToList();
+
+            //MANEJANDO MULTIPROPIETARIOS
+            for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
+            {
+                if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
+                {
+                    if (multipropietariosEnajenantes[j].RutPropietario == enajenantesRut[0])
+                    {
+                        float Derechos = multipropietariosEnajenantes[j].PorcentajeDerecho * (enajenantesPorcentajeDerechoFloat[0] / 100);
+                        multipropietariosEnajenantes[j].PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho - Derechos;
+                        adquirientesPorcentajeDerechoFloat[0] = Derechos;
+                        break;
+                    }
+                }
+                else
+                {
+                    MultiPropietario multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
+
+                    if (multipropietariosEnajenantes[j].RutPropietario != enajenantesRut[0])
+                    {
+                        _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                    }
+                    else
+                    {
+                        float Derechos = multiPropietarioNuevaVigencia.PorcentajeDerecho * (enajenantesPorcentajeDerechoFloat[0] / 100);
+                        multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Derechos;
+                        _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                        adquirientesPorcentajeDerechoFloat[0] = Derechos;
+                    }
+                }
+            }
+        }
+        private void CompraventaDominios(   Inscripcion inscripcion,
+                                            string[] enajenantesRut,
+                                            List<float> enajenantesPorcentajeDerechoFloat
+                                            )
+        {
+            List<MultiPropietario> multipropietariosEnajenantes = _contexto.MultiPropietarios.
+                    OrderBy(mp => mp.AnoInscripcion).
+                    ThenBy(mp => mp.NumeroInscripcion).
+                    Where(mp => mp.Comuna == inscripcion.Comuna &&
+                                mp.Manzana == inscripcion.Manzana &&
+                                mp.Predio == inscripcion.Predio &&
+                                mp.AnoVigenciaFinal == null).ToList();
+
+            for (int i = 0; i < enajenantesRut.Count(); i++)
+            {
+                for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
+                {
+                    float Dominios = enajenantesPorcentajeDerechoFloat[i];
+                    if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
+                    {
+
+                        if (multipropietariosEnajenantes[j].RutPropietario == enajenantesRut[i])
+                        {
+                            multipropietariosEnajenantes[j].PorcentajeDerecho = multipropietariosEnajenantes[j].PorcentajeDerecho - Dominios;
+                            //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
+                            if (multipropietariosEnajenantes[j].PorcentajeDerecho < 0)
+                            {
+                                multipropietariosEnajenantes[j].PorcentajeDerecho = 0;
+                            }
+                            break;
+                        }
+
+                    }
+                    else
+                    {
+                        MultiPropietario multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
+
+                        if (multipropietariosEnajenantes[j].RutPropietario != enajenantesRut[i])
+                        {
+                            _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                        }
+                        else
+                        {
+                            multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Dominios;
+                            //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
+                            if (multiPropietarioNuevaVigencia.PorcentajeDerecho < 0)
+                            {
+                                _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                                _contexto.MultiPropietarios.Remove(multiPropietarioNuevaVigencia);
+                                continue;
+                            }
+                            _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
+                        }
+                        continue;
+                    }
+                }
+            }
+        }
+        private MultiPropietario CrearMultiPropietario(Inscripcion inscripcion ,List<MultiPropietario> multipropietariosEnajenantes, int posicion)
+        {
+            MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
+
+            multiPropietarioNuevaVigencia.RutPropietario = multipropietariosEnajenantes[posicion].RutPropietario;
+            multiPropietarioNuevaVigencia.PorcentajeDerecho = multipropietariosEnajenantes[posicion].PorcentajeDerecho;
+            multiPropietarioNuevaVigencia.Fojas = multipropietariosEnajenantes[posicion].Fojas;
+            multiPropietarioNuevaVigencia.NumeroInscripcion = multipropietariosEnajenantes[posicion].NumeroInscripcion;
+            multiPropietarioNuevaVigencia.FechaInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion;
+            multiPropietarioNuevaVigencia.AnoInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion.Year;
+            multiPropietarioNuevaVigencia.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
+            multiPropietarioNuevaVigencia.AnoVigenciaFinal = null;
+            multiPropietarioNuevaVigencia.Comuna = inscripcion.Comuna;
+            multiPropietarioNuevaVigencia.Manzana = inscripcion.Manzana;
+            multiPropietarioNuevaVigencia.Predio = inscripcion.Predio;
+            multipropietariosEnajenantes[posicion].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
+            return multiPropietarioNuevaVigencia;
         }
     }
 }
