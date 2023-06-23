@@ -115,8 +115,9 @@
             .text("Porcentaje Derecho\n");
         var porcentajeDerechoInput = $("<input>")
             .attr("type", "number")
+            .attr("step", "0.01")
+            .attr("pattern", "[0-9]+([.,][0-9]+)?")
             .attr("name", "AdquirientesPorcentajeDerecho")
-            .attr("step", 0.001)
             .val(adquiriente.PorcentajeDerecho);
         porcentajeDerechoInput.on("input", function () {
             var inputValue = $(this).val();
