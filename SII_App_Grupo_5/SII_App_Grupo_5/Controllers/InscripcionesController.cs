@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SII_App_Grupo_5.Controllers
 {
@@ -54,6 +55,17 @@ namespace SII_App_Grupo_5.Controllers
 
             _contexto.Inscripciones.AddRange(inscripcion);
             _contexto.SaveChanges();
+
+            foreach (string adquirienteRut in adquirientesRut)
+            {
+                bool valido = ValidaRut(adquirienteRut);
+                if (!valido)
+                {
+                    ModelState.AddModelError(string.Empty, "Alguno de los ruts ingresados no es válido");
+                    ViewBag.Comunas = _contexto.Comunas;
+                    return View();
+                }
+            }
 
             //CREACION DE LA INSCRIPCION
             CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
@@ -576,10 +588,10 @@ namespace SII_App_Grupo_5.Controllers
 
             multiPropietarioNuevaVigencia.RutPropietario = enajenantesRut[0];
             multiPropietarioNuevaVigencia.Fojas = inscripcion.Fojas;
-            multiPropietarioNuevaVigencia.NumeroInscripcion = 0;
+            multiPropietarioNuevaVigencia.NumeroInscripcion = null;
             multiPropietarioNuevaVigencia.PorcentajeDerecho = 100 - adquirientesPorcentajeDerechoFloat[0];
             multiPropietarioNuevaVigencia.FechaInscripcion = inscripcion.FechaInscripcion;
-            multiPropietarioNuevaVigencia.AnoInscripcion = 0;
+            multiPropietarioNuevaVigencia.AnoInscripcion = null;
             if (inscripcion.FechaInscripcion <= new DateTime(2019, 1, 1))
             {
                 multiPropietarioNuevaVigencia.AnoVigenciaInicial = new DateTime(2019, 1, 1).Year;
@@ -745,5 +757,44 @@ namespace SII_App_Grupo_5.Controllers
             multipropietariosEnajenantes[posicion].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
             return multiPropietarioNuevaVigencia;
         }
+        private bool ValidaRut(string rut)
+        {
+            //Basado en: https://gist.github.com/donpandix/045f865c3bf800893036
+            string rutTemporal = rut;
+            rutTemporal = rutTemporal.Replace(".", "").ToUpper();
+
+            Regex expresion = new Regex("^([0-9]+-[0-9K])$");
+            if (!expresion.IsMatch(rutTemporal))
+            {
+                return false;
+            }
+            rutTemporal = rutTemporal.Replace("-", "");
+
+            List<string> rutEntero = new List<string>();
+            foreach (char digito in rutTemporal)
+            {
+                rutEntero.Insert(0, digito.ToString());
+            }
+            string digitoVerificador = rutEntero[0];
+            rutEntero.RemoveAt(0);
+
+            int sumaTotal = 0;
+            int multiplicador = 2;
+            foreach (string digito in rutEntero)
+            {
+                int digitoInt = Int32.Parse(digito);
+                sumaTotal += digitoInt * multiplicador;
+                multiplicador++;
+                if (multiplicador > 7) { multiplicador = 2; }
+            }
+
+            string digitoVerificadorEsperado = (11 - (sumaTotal % 11)).ToString();
+            if (digitoVerificadorEsperado == "10") { digitoVerificadorEsperado = "K"; }
+            else if (digitoVerificadorEsperado == "11") { digitoVerificadorEsperado = "0"; }
+
+            if (digitoVerificadorEsperado == digitoVerificador) { return true; }
+            else { return false; }
+        }
     }
 }
+

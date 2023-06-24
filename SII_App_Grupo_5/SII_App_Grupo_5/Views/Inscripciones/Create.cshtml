@@ -104,7 +104,7 @@
             .attr("id", "adqirientesRut" + (index + 1))
             .attr("name", "adquirientesRut")
             .attr('required', '')
-            .attr("oninput", "checkRut(this)")
+            .attr("oninput", "rutificar(this)")
             .val(adquiriente.Rut);
         var rutInfo = $("<span>")
             .attr("class", "text-danger")
@@ -161,7 +161,7 @@
         var rutInput = $("<input>")
             .attr("type", "text")
             .attr("name", "EnajenantesRut")
-            .attr("oninput", "checkRut(this)")
+            .attr("oninput", "rutificar(this)")
             .val(enajenante.Rut);
         rutInput.on("input", function () {
             var inputValue = $(this).val();
@@ -204,30 +204,13 @@
         enajenantes.push(enajenante);
     }
 
-    function checkRut(rut) {
+    function rutificar(rut) {
+        var valido = true;
         var valor = rut.value.replace('.', '');
         valor = valor.replace('-', '');
         cuerpo = valor.slice(0, -1);
         digitoVerificador = valor.slice(-1).toUpperCase();
-        rut.value = cuerpo + '-' + digitoVerificador
-
-        // Calcular Dígito Verificador
-        suma = 0;
-        multiplo = 2;
-        for (i = 1; i <= cuerpo.length; i++) {
-            index = multiplo * valor.charAt(cuerpo.length - i);
-            suma = suma + index;
-            if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-        }
-        // Calcular Dígito Verificador en base al Módulo 11
-        digitoVerificadorEsperado = 11 - (suma % 11);
-        // Casos Especiales (0 y K)
-        digitoVerificador = (dv == 'K') ? 10 : dv;
-        digitoVerificador = (dv == 11) ? 0 : dv;
-
-        // Se verifica si es correcto
-        if (digitoVerificadorEsperado != digitoVerificador) { rut.setCustomValidity("RUT Inválido"); return false; }
-        rut.setCustomValidity('');
+        rut.value = cuerpo + '-' + digitoVerificador;
     }
 
 </script>
