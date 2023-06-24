@@ -77,7 +77,7 @@ namespace SII_App_Grupo_5.Controllers
             //PROCESANDO REGULARIZACION DE PATRIMONIO
             if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio")
             {
-                RegularizacionPatrimonio(inscripcion, adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
+                RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
             }
             //PROCESANDO CASOS DE COMPRAVENTA
             if (inscripcion.NaturalezaEscritura == "Compraventa")
@@ -85,12 +85,12 @@ namespace SII_App_Grupo_5.Controllers
                 //COMPRAVENTA DE TRANSFERENCIA TOTAL
                 if (adquirientesPorcentajeDerechoFloat.Sum() == 100)
                 {
-                    CompraventaTransferenciaTotal(inscripcion, adquirientesPorcentajeDerechoFloat, enajenantesRut, enajenantesPorcentajeDerechoFloat,enajenantesAcreditado);
+                    CompraventaTransferenciaTotal(inscripcion, adquirientesPorcentajeDerechoFloat, enajenantesRut);
                 }
                 //COMPRAVENTA DE DERECHOS
                 else if (adquirientesPorcentajeDerechoFloat.Sum() < 100 && enajenantesRut.Count() == 1 && adquirientesRut.Count() == 1)
                 {
-                    CompraventaDerechos(inscripcion, enajenantesRut, adquirientesPorcentajeDerechoFloat, enajenantesPorcentajeDerechoFloat,enajenantesAcreditado);
+                    CompraventaDerechos(inscripcion, enajenantesRut, adquirientesPorcentajeDerechoFloat, enajenantesPorcentajeDerechoFloat);
                 }
                 //COMPRAVENTA DE DOMINIOS
                 else
@@ -283,8 +283,7 @@ namespace SII_App_Grupo_5.Controllers
                 _contexto.Enajenantes.AddRange(enajenante);
             }
         }
-        private void RegularizacionPatrimonio(  Inscripcion inscripcion,
-                                                bool[] adquirientesAcreditado,
+        private void RegularizacionPatrimonio(  bool[] adquirientesAcreditado,
                                                 float totalPorcentajeDerecho,
                                                 int adquirientesNoAcreditados,
                                                 List<float> adquirientesPorcentajeDerechoFloat)
@@ -293,7 +292,7 @@ namespace SII_App_Grupo_5.Controllers
             {
                 if (adquirientesAcreditado[i])
                 {
-                    totalPorcentajeDerecho = totalPorcentajeDerecho - adquirientesPorcentajeDerechoFloat[i];
+                    totalPorcentajeDerecho =- adquirientesPorcentajeDerechoFloat[i];
                 }
                 else
                 {
@@ -314,9 +313,7 @@ namespace SII_App_Grupo_5.Controllers
 
         
         private int ConfirmarFantasma(Inscripcion inscripcion,
-                                                    string[] enajenantesRut,
-                                                    List<float> enajenantesPorcentajeDerechoFloat,
-                                                    bool[] enajenantesAcreditado)
+                                                    string[] enajenantesRut)
         {
             bool enajenanteEncontrado = false;
             List<MultiPropietario> multipropietariosFantasmas = _contexto.MultiPropietarios.
@@ -364,11 +361,11 @@ namespace SII_App_Grupo_5.Controllers
             {
                 for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
                 {
-                    transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count(); k++)
                 {
-                    transferenciaTotal = transferenciaTotal + adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -395,13 +392,13 @@ namespace SII_App_Grupo_5.Controllers
                 MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
                 for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
                 {
-                    transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
                     multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
                     multipropietariosAfectados.Add(multiPropietarioNuevaVigencia);
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count(); k++)
                 {
-                    transferenciaTotal = transferenciaTotal + adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -436,11 +433,11 @@ namespace SII_App_Grupo_5.Controllers
             {
                 for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
                 {
-                    transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count(); k++)
                 {
-                    transferenciaTotal = transferenciaTotal + adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -467,7 +464,7 @@ namespace SII_App_Grupo_5.Controllers
                 MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
                 for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
                 {
-                    transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
                     multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
                     for (int k = 0; k < enajenantesRut.Count(); k++)
                     {
@@ -480,7 +477,7 @@ namespace SII_App_Grupo_5.Controllers
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count(); k++)
                 {
-                    transferenciaTotal = transferenciaTotal + adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -498,11 +495,9 @@ namespace SII_App_Grupo_5.Controllers
 
         private void CompraventaTransferenciaTotal( Inscripcion inscripcion,
                                                     List<float> adquirientesPorcentajeDerechoFloat,
-                                                    string[] enajenantesRut,
-                                                    List<float> enajenantesPorcentajeDerechoFloat,
-                                                    bool[] enajenantesAcreditado)
+                                                    string[] enajenantesRut)
         {
-            int numerofantasmas = ConfirmarFantasma(inscripcion, enajenantesRut, enajenantesPorcentajeDerechoFloat,enajenantesAcreditado);
+            int numerofantasmas = ConfirmarFantasma(inscripcion, enajenantesRut);
 
             if (numerofantasmas>0 && numerofantasmas < enajenantesRut.Count())
             {
@@ -533,7 +528,7 @@ namespace SII_App_Grupo_5.Controllers
                         {
                             if (multipropietariosEnajenantes[i].RutPropietario == enajenantesRut[j])
                             {
-                                transferenciaTotal = transferenciaTotal + multipropietariosEnajenantes[i].PorcentajeDerecho;
+                                transferenciaTotal =+ multipropietariosEnajenantes[i].PorcentajeDerecho;
                                 _contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[i]);
                                 break;
                             }
@@ -556,7 +551,7 @@ namespace SII_App_Grupo_5.Controllers
                     _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
                     if (porBorrar)
                     {
-                        transferenciaTotal = transferenciaTotal + multiPropietarioNuevaVigencia.PorcentajeDerecho;
+                        transferenciaTotal =+ multiPropietarioNuevaVigencia.PorcentajeDerecho;
                         _contexto.MultiPropietarios.Remove(multiPropietarioNuevaVigencia);
                         porBorrar = false;
                     }
@@ -570,8 +565,7 @@ namespace SII_App_Grupo_5.Controllers
 
         private void CompraventaDerechosFantasma(Inscripcion inscripcion,
                                             string[] enajenantesRut,
-                                            List<float> adquirientesPorcentajeDerechoFloat,
-                                            List<float> enajenantesPorcentajeDerechoFloat
+                                            List<float> adquirientesPorcentajeDerechoFloat
                                             )
         {
 
@@ -630,14 +624,13 @@ namespace SII_App_Grupo_5.Controllers
         private void CompraventaDerechos(   Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> adquirientesPorcentajeDerechoFloat,
-                                            List<float> enajenantesPorcentajeDerechoFloat,
-                                            bool[] enajenantesAcreditado
+                                            List<float> enajenantesPorcentajeDerechoFloat
                                             ) 
         {
-            int numerofantasmas = ConfirmarFantasma(inscripcion, enajenantesRut, enajenantesPorcentajeDerechoFloat, enajenantesAcreditado);
+            int numerofantasmas = ConfirmarFantasma(inscripcion, enajenantesRut);
             if (numerofantasmas > 0)
             {
-                CompraventaDerechosFantasma(inscripcion, enajenantesRut, adquirientesPorcentajeDerechoFloat, enajenantesPorcentajeDerechoFloat);
+                CompraventaDerechosFantasma(inscripcion, enajenantesRut, adquirientesPorcentajeDerechoFloat);
             }
             else
             {
@@ -673,7 +666,7 @@ namespace SII_App_Grupo_5.Controllers
                         else
                         {
                             float Derechos = multiPropietarioNuevaVigencia.PorcentajeDerecho * (enajenantesPorcentajeDerechoFloat[0] / 100);
-                            multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Derechos;
+                            multiPropietarioNuevaVigencia.PorcentajeDerecho =- Derechos;
                             _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
                             adquirientesPorcentajeDerechoFloat[0] = Derechos;
                         }
@@ -724,7 +717,7 @@ namespace SII_App_Grupo_5.Controllers
                         }
                         else
                         {
-                            multiPropietarioNuevaVigencia.PorcentajeDerecho = multiPropietarioNuevaVigencia.PorcentajeDerecho - Dominios;
+                            multiPropietarioNuevaVigencia.PorcentajeDerecho =- Dominios;
                             //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
                             if (multiPropietarioNuevaVigencia.PorcentajeDerecho < 0)
                             {
