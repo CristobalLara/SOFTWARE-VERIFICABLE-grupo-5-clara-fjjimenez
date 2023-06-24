@@ -91,38 +91,39 @@
         var adquiriente = {
             Id: 0,
             Rut: 0,
-            PorcentajeDerecho:0,
-            Acreditado:true,
+            PorcentajeDerecho: 0,
+            Acreditado: true,
             InscripcionId: 0
         };
         var adquirienteDiv = $("<div>");
 
         var rutLabel = $("<label>")
-            .text("Rut del Adquiriente "+ (index+1) +"\n");
+            .text("Rut del Adquiriente " + (index + 1) + "\n");
         var rutInput = $("<input>")
             .attr("type", "text")
-            .attr("name", "AdquirientesRut")
+            .attr("id", "adqirientesRut" + (index + 1))
+            .attr("name", "adquirientesRut")
+            .attr('required', '')
+            .attr("oninput", "checkRut(this)")
             .val(adquiriente.Rut);
-        rutInput.on("input", function () {
-            var inputValue = $(this).val();
-            if (!isNumeric(inputValue)) {
-                $(this).val(inputValue.replace(/[^0-9]/g, ''));
-            }
-        });
-        adquirienteDiv.append(rutLabel, "<br>", rutInput,"<br>");
+        var rutInfo = $("<span>")
+            .attr("class", "text-danger")
+            .attr("id", "msgerror" + (index + 1))
+
+        adquirienteDiv.append(rutLabel, "<br>", rutInput, "<br>");
 
         var porcentajeDerechoLabel = $("<label>")
             .text("Porcentaje Derecho\n");
         var porcentajeDerechoInput = $("<input>")
             .attr("type", "number")
-            .attr("step", 0.01)
+            .attr("step", "0.01")
             .attr("pattern", "[0-9]+([.,][0-9]+)?")
             .attr("name", "AdquirientesPorcentajeDerecho")
             .val(adquiriente.PorcentajeDerecho);
         porcentajeDerechoInput.on("input", function () {
             var inputValue = $(this).val();
         });
-        adquirienteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput,"<br>");
+        adquirienteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput, "<br>");
 
         var acreditadoLabel = $("<label>")
             .text("Acreditado");
@@ -136,12 +137,12 @@
             .attr("value", false)
             .text("No Acreditado");
         acreditadoInput.append(optionFalse);
-        adquirienteDiv.append(acreditadoLabel, "<br>", acreditadoInput,"<br>");
+        adquirienteDiv.append(acreditadoLabel, "<br>", acreditadoInput, "<br>");
 
         $("#adquirientesContainer").append(adquirienteDiv);
 
         adquirientes.push(adquiriente);
-}
+    }
     function agregarEnajenante() {
 
         var index = $("#enajenantesContainer").children().length;
@@ -156,10 +157,11 @@
         var enajenanteDiv = $("<div>");
 
         var rutLabel = $("<label>")
-            .text("Rut del Enajenante " + (index) +"\n");
+            .text("Rut del Enajenante " + (index) + "\n");
         var rutInput = $("<input>")
             .attr("type", "text")
             .attr("name", "EnajenantesRut")
+            .attr("oninput", "checkRut(this)")
             .val(enajenante.Rut);
         rutInput.on("input", function () {
             var inputValue = $(this).val();
@@ -167,7 +169,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        enajenanteDiv.append(rutLabel, "<br>", rutInput,"<br>");
+        enajenanteDiv.append(rutLabel, "<br>", rutInput, "<br>");
 
         var porcentajeDerechoLabel = $("<label>")
             .text("Porcentaje Derecho\n");
@@ -181,7 +183,7 @@
                 $(this).val(inputValue.replace(/[^0-9]/g, ''));
             }
         });
-        enajenanteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput,"<br>");
+        enajenanteDiv.append(porcentajeDerechoLabel, "<br>", porcentajeDerechoInput, "<br>");
 
         var acreditadoLabel = $("<label>")
             .text("Acreditado");
@@ -195,11 +197,37 @@
             .attr("value", false)
             .text("No Acreditado");
         acreditadoInput.append(optionFalse);
-        enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput,"<br>");
+        enajenanteDiv.append(acreditadoLabel, "<br>", acreditadoInput, "<br>");
 
         $("#enajenantesContainer").append(enajenanteDiv);
 
         enajenantes.push(enajenante);
+    }
+
+    function checkRut(rut) {
+        var valor = rut.value.replace('.', '');
+        valor = valor.replace('-', '');
+        cuerpo = valor.slice(0, -1);
+        digitoVerificador = valor.slice(-1).toUpperCase();
+        rut.value = cuerpo + '-' + digitoVerificador
+
+        // Calcular Dígito Verificador
+        suma = 0;
+        multiplo = 2;
+        for (i = 1; i <= cuerpo.length; i++) {
+            index = multiplo * valor.charAt(cuerpo.length - i);
+            suma = suma + index;
+            if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+        }
+        // Calcular Dígito Verificador en base al Módulo 11
+        digitoVerificadorEsperado = 11 - (suma % 11);
+        // Casos Especiales (0 y K)
+        digitoVerificador = (dv == 'K') ? 10 : dv;
+        digitoVerificador = (dv == 11) ? 0 : dv;
+
+        // Se verifica si es correcto
+        if (digitoVerificadorEsperado != digitoVerificador) { rut.setCustomValidity("RUT Inválido"); return false; }
+        rut.setCustomValidity('');
     }
 
 </script>

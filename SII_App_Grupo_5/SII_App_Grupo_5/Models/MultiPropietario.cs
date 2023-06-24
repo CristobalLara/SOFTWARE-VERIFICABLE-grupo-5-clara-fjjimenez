@@ -12,8 +12,10 @@ namespace SII_App_Grupo_5.Models
         public string RutPropietario { get; set; }
         public float PorcentajeDerecho { get; set; }
         public int Fojas { get; set; }
-        public int AnoInscripcion { get; set; }
-        public int NumeroInscripcion { get; set; }
+        [DisplayFormat(NullDisplayText = "no tiene")]
+        public int? AnoInscripcion { get; set; }
+        [DisplayFormat(NullDisplayText = "no tiene")]
+        public int? NumeroInscripcion { get; set; }
         public DateTime FechaInscripcion { get; set; }
         public int AnoVigenciaInicial { get; set; }
         [DisplayFormat(NullDisplayText = "no tiene")]
