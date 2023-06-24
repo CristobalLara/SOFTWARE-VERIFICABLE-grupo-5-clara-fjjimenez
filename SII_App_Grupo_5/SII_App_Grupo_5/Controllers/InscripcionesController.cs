@@ -757,7 +757,7 @@ namespace SII_App_Grupo_5.Controllers
             multipropietariosEnajenantes[posicion].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
             return multiPropietarioNuevaVigencia;
         }
-        private bool ValidaRut(string rut)
+        public bool ValidaRut(string rut)
         {
             //Basado en: https://gist.github.com/donpandix/045f865c3bf800893036
             string rutTemporal = rut;
