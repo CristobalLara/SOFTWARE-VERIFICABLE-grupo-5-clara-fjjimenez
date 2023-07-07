@@ -72,8 +72,9 @@ namespace SII_App_Grupo_5.Controllers
             }
 
             //CREACION DE LA INSCRIPCION
-            CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
-            CreacionEnajenantes(inscripcion, listaEnajenantes, enajenantesRut, enajenantesPorcentajeDerechoFloat, enajenantesAcreditado);
+            List<Adquiriente> adquirientes = CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
+            List<Enajenante> enajenantes = CreacionEnajenantes(inscripcion, listaEnajenantes, enajenantesRut, enajenantesPorcentajeDerechoFloat, enajenantesAcreditado);
+            GuardarPropietarios(adquirientes, enajenantes);
 
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
@@ -248,7 +249,18 @@ namespace SII_App_Grupo_5.Controllers
             return floatList;
         }
 
-        private Inscripcion CreacionAdquirientes(   Inscripcion inscripcion, 
+        private void GuardarPropietarios(List<Adquiriente> listaAdquirientes, List<Enajenante> listaEnajenantes)
+        {
+            foreach (Adquiriente adquiriente in listaAdquirientes){
+                _contexto.Adquirientes.AddRange(adquiriente);
+            }
+            foreach (Enajenante enajenante in listaEnajenantes)
+            {
+                _contexto.Enajenantes.AddRange(enajenante);
+            }
+        }
+
+        private List<Adquiriente> CreacionAdquirientes(   Inscripcion inscripcion, 
                                             List<Adquiriente> listaAdquirientes, 
                                             string[] adquirientesRut, 
                                             List<float> adquirientesPorcentajeDerechoFloat, 
@@ -266,12 +278,11 @@ namespace SII_App_Grupo_5.Controllers
                     adquiriente.PorcentajeDerecho = 0;
                 }
                 listaAdquirientes.Add(adquiriente);
-                _contexto.Adquirientes.AddRange(adquiriente);
             }
-            return inscripcion;
+            return listaAdquirientes;
         }
 
-        private Inscripcion CreacionEnajenantes(   Inscripcion inscripcion,
+        private List<Enajenante> CreacionEnajenantes(   Inscripcion inscripcion,
                                             List<Enajenante> listaEnajenantes,
                                             string[] enajenantesRut,
                                             List<float> enajenantesPorcentajeDerechoFloat,
@@ -285,9 +296,8 @@ namespace SII_App_Grupo_5.Controllers
                 enajenante.Acreditado = enajenantesAcreditado[i];
                 enajenante.InscripcionId = inscripcion.Folio;
                 listaEnajenantes.Add(enajenante);
-                _contexto.Enajenantes.AddRange(enajenante);
             }
-            return inscripcion;
+            return listaEnajenantes;
         }
         private float RegularizacionPatrimonio(  Inscripcion inscripcion,
                                                 bool[] adquirientesAcreditado,
