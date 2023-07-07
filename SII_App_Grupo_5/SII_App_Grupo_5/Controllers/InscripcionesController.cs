@@ -646,7 +646,7 @@ namespace SII_App_Grupo_5.Controllers
             porcentajeDerechoTest = multiPropietarioNuevaVigencia.PorcentajeDerecho;
 
             //MANEJANDO MULTIPROPIETARIOS
-            for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
+            for (int j = 0; j < multipropietariosEnajenantes.Count();)
             {
                 if (multipropietariosEnajenantes[j].AnoVigenciaInicial == inscripcion.FechaInscripcion.Year)
                 {
