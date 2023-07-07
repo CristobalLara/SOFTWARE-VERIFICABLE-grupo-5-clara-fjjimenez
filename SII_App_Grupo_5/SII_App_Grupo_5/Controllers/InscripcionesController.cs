@@ -77,7 +77,7 @@ namespace SII_App_Grupo_5.Controllers
             //PROCESANDO REGULARIZACION DE PATRIMONIO
             if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio")
             {
-                RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
+                RegularizacionPatrimonio(inscripcion,adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
             }
             //PROCESANDO CASOS DE COMPRAVENTA
             if (inscripcion.NaturalezaEscritura == "Compraventa")
@@ -244,7 +244,7 @@ namespace SII_App_Grupo_5.Controllers
             return floatList;
         }
 
-        private void CreacionAdquirientes(   Inscripcion inscripcion, 
+        private Inscripcion CreacionAdquirientes(   Inscripcion inscripcion, 
                                             List<Adquiriente> listaAdquirientes, 
                                             string[] adquirientesRut, 
                                             List<float> adquirientesPorcentajeDerechoFloat, 
@@ -264,9 +264,10 @@ namespace SII_App_Grupo_5.Controllers
                 listaAdquirientes.Add(adquiriente);
                 _contexto.Adquirientes.AddRange(adquiriente);
             }
+            return inscripcion;
         }
 
-        private void CreacionEnajenantes(   Inscripcion inscripcion,
+        private Inscripcion CreacionEnajenantes(   Inscripcion inscripcion,
                                             List<Enajenante> listaEnajenantes,
                                             string[] enajenantesRut,
                                             List<float> enajenantesPorcentajeDerechoFloat,
@@ -282,8 +283,10 @@ namespace SII_App_Grupo_5.Controllers
                 listaEnajenantes.Add(enajenante);
                 _contexto.Enajenantes.AddRange(enajenante);
             }
+            return inscripcion;
         }
-        private void RegularizacionPatrimonio(  bool[] adquirientesAcreditado,
+        private Inscripcion RegularizacionPatrimonio(  Inscripcion inscripcion,
+                                                bool[] adquirientesAcreditado,
                                                 float totalPorcentajeDerecho,
                                                 int adquirientesNoAcreditados,
                                                 List<float> adquirientesPorcentajeDerechoFloat)
@@ -309,6 +312,7 @@ namespace SII_App_Grupo_5.Controllers
                     adquirientesPorcentajeDerechoFloat[j] = parcialPorcentajeDerecho;
                 }
             }
+            return inscripcion;
         }
 
         
@@ -343,7 +347,7 @@ namespace SII_App_Grupo_5.Controllers
             }
             return numerofantasmas;
         }
-        private void CompraventaTransferenciaTotalFantasmaCasoA(Inscripcion inscripcion,
+        private Inscripcion CompraventaTransferenciaTotalFantasmaCasoA(Inscripcion inscripcion,
                                                     List<float> adquirientesPorcentajeDerechoFloat)
         {
             float transferenciaTotal = 0;
@@ -413,8 +417,9 @@ namespace SII_App_Grupo_5.Controllers
                     adquirientesPorcentajeDerechoFloat[k] = adquirientesPorcentajeDerechoFloat[k] / divisor;
                 }
             }
+            return inscripcion;
         }
-        private void CompraventaTransferenciaTotalFantasmaCasoB(Inscripcion inscripcion,
+        private Inscripcion CompraventaTransferenciaTotalFantasmaCasoB(Inscripcion inscripcion,
                                                     List<float> adquirientesPorcentajeDerechoFloat,
                                                     string[] enajenantesRut)
         {
@@ -491,9 +496,10 @@ namespace SII_App_Grupo_5.Controllers
                     adquirientesPorcentajeDerechoFloat[k] = adquirientesPorcentajeDerechoFloat[k] / divisor;
                 }
             }
+            return inscripcion;
         }
 
-        private void CompraventaTransferenciaTotal( Inscripcion inscripcion,
+        private Inscripcion CompraventaTransferenciaTotal( Inscripcion inscripcion,
                                                     List<float> adquirientesPorcentajeDerechoFloat,
                                                     string[] enajenantesRut)
         {
@@ -561,9 +567,10 @@ namespace SII_App_Grupo_5.Controllers
                     adquirientesPorcentajeDerechoFloat[k] = (float)(transferenciaTotal * (adquirientesPorcentajeDerechoFloat[k] * 0.01));
                 }
             }
+            return inscripcion;
         }
 
-        private void CompraventaDerechosFantasma(Inscripcion inscripcion,
+        private Inscripcion CompraventaDerechosFantasma(Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> adquirientesPorcentajeDerechoFloat
                                             )
@@ -620,8 +627,9 @@ namespace SII_App_Grupo_5.Controllers
                     break;
                 }
             }
+            return inscripcion;
         }
-        private void CompraventaDerechos(   Inscripcion inscripcion,
+        private Inscripcion CompraventaDerechos(   Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> adquirientesPorcentajeDerechoFloat,
                                             List<float> enajenantesPorcentajeDerechoFloat
@@ -673,8 +681,9 @@ namespace SII_App_Grupo_5.Controllers
                     }
                 }
             }
+            return inscripcion;
         }
-        private void CompraventaDominios(   Inscripcion inscripcion,
+        private Inscripcion CompraventaDominios(   Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> enajenantesPorcentajeDerechoFloat
                                             )
@@ -731,6 +740,7 @@ namespace SII_App_Grupo_5.Controllers
                     }
                 }
             }
+            return inscripcion;
         }
         private MultiPropietario CrearMultiPropietario(Inscripcion inscripcion ,List<MultiPropietario> multipropietariosEnajenantes, int posicion)
         {

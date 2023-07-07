@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qagkVL2ullM/sIItsyXGl6tbFPeI6av5VBXq9hkjoSdXJZ46tAaNr3kKP1kq99dcyEFr/BdaSb6abrHgQlKzjQ==",
+  "dgSpecHash": "Q10xcv8tKnNc8ylH2kfy17MoNEXknO6g8vOumfivX0+KUiHhRa3XQKw29Hu5CsbgbdIOBZ1TN012AqevfB/WDQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\M1911\\Desktop\\Software Verificable\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
+  "projectFilePath": "C:\\Users\\M1911\\Desktop\\Nueva carpeta\\SOFTWARE-VERIFICABLE-grupo-5-clara-fjjimenez\\SII_App_Grupo_5\\SII_App_Grupo_5\\SII_App_Grupo_5.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\M1911\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\M1911\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
