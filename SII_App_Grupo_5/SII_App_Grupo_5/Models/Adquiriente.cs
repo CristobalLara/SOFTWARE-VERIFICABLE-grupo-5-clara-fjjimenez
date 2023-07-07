@@ -12,5 +12,11 @@ namespace SII_App_Grupo_5.Models
         public string Rut { get; set; }
         public float PorcentajeDerecho { get; set; }
         public bool Acreditado { get; set; }
+
+        public Adquiriente()
+        {
+            Rut = string.Empty;
+            Inscripcion = new Inscripcion();
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace SII_App_Grupo_5.Controllers
             if (isIntAVF)
             {
                 multiPropietarios = multiPropietarios
-               .Where(i => (i.AnoVigenciaFinal.ToString().Contains(searchAnoVigenciaFinal))).ToList();
+               .Where(i => (i.AnoVigenciaFinal?.ToString().Contains(searchAnoVigenciaFinal) ?? false)).ToList();
             }
             ViewBag.Comunas = _contexto.Comunas;
             return View(multiPropietarios);

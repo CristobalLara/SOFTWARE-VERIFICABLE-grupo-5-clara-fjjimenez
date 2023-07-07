@@ -26,5 +26,13 @@ namespace SII_App_Grupo_5.Models
         virtual public List<Enajenante> Enajenantes { get; set; }
         virtual public List<Adquiriente> Adquirientes { get; set; }
 
+        public Inscripcion()
+        {
+            NaturalezaEscritura = string.Empty;
+            Comuna = string.Empty;
+            Enajenantes = new List<Enajenante>();
+            Adquirientes = new List<Adquiriente>();
+        }
+
     }
 }

@@ -234,6 +234,14 @@ namespace SII_App_Grupo_5.Controllers
                 return View();
             }
 
+            if (inscripcion.NaturalezaEscritura == null)
+            {
+                ModelState.AddModelError(string.Empty, "Debe ingresar una comuna");
+                //SE OBTIENEN LAS COMUNAS PARA EL COMONBOX
+                ViewBag.Comunas = _contexto.Comunas;
+                return View();
+            }
+
             _contexto.SaveChanges();
             return RedirectToAction("Index");
         }
