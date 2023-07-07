@@ -1,7 +1,6 @@
 using SII_App_Grupo_5.Controllers;
 using SII_App_Grupo_5.Data;
 using SII_App_Grupo_5.Models;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SII_App_Grupo_5.UnitTests
 {
@@ -179,7 +178,7 @@ namespace SII_App_Grupo_5.UnitTests
         }
 
         [TestMethod]
-        public void MultiPropietarioaa()
+        public void CrearMultiPropietario_ReturnsMultipropietarion ()
         {
             DateTime FechaInscripcion = DateTime.Now;
             Inscripcion inscripcionAdquiriente = new Inscripcion

@@ -674,7 +674,7 @@ namespace SII_App_Grupo_5.Controllers
             }
             return porcentajeDerechoTest;
         }
-        private float CompraventaDerechos(   Inscripcion inscripcion,
+        public float CompraventaDerechos(   Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> adquirientesPorcentajeDerechoFloat,
                                             List<float> enajenantesPorcentajeDerechoFloat
