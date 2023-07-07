@@ -13,6 +13,10 @@ namespace SII_App_Grupo_5.Controllers
     public class InscripcionesController : Controller
     {
         public InscriptionsGrupo5DbContext _contexto;
+
+        public DateTime fechaTope = new DateTime(2019, 1, 1);
+
+        public int anoTope = 2019;
         public InscripcionesController(InscriptionsGrupo5DbContext contexto)
         {
             _contexto = contexto;
@@ -109,9 +113,9 @@ namespace SII_App_Grupo_5.Controllers
                 multipropietario.NumeroInscripcion = inscripcion.NumeroInscripcion;
                 multipropietario.FechaInscripcion = inscripcion.FechaInscripcion;
                 multipropietario.AnoInscripcion = inscripcion.FechaInscripcion.Year;
-                if (inscripcion.FechaInscripcion <= new DateTime(2019, 1, 1))
+                if (inscripcion.FechaInscripcion <= fechaTope)
                 {
-                    multipropietario.AnoVigenciaInicial = new DateTime(2019, 1, 1).Year;
+                    multipropietario.AnoVigenciaInicial = anoTope;
                 }
                 else
                 {
@@ -593,9 +597,9 @@ namespace SII_App_Grupo_5.Controllers
             multiPropietarioNuevaVigencia.PorcentajeDerecho = 100 - adquirientesPorcentajeDerechoFloat[0];
             multiPropietarioNuevaVigencia.FechaInscripcion = inscripcion.FechaInscripcion;
             multiPropietarioNuevaVigencia.AnoInscripcion = null;
-            if (inscripcion.FechaInscripcion <= new DateTime(2019, 1, 1))
+            if (inscripcion.FechaInscripcion <= fechaTope)
             {
-                multiPropietarioNuevaVigencia.AnoVigenciaInicial = new DateTime(2019, 1, 1).Year;
+                multiPropietarioNuevaVigencia.AnoVigenciaInicial = anoTope;
             }
             else
             {
