@@ -8,6 +8,11 @@ namespace SII_App_Grupo_5.Data
         {
 
         }
+
+        public InscriptionsGrupo5DbContext()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies(); // Enable lazy loading

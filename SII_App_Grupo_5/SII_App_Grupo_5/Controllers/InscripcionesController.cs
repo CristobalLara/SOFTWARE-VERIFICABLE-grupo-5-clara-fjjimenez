@@ -82,7 +82,7 @@ namespace SII_App_Grupo_5.Controllers
             //PROCESANDO REGULARIZACION DE PATRIMONIO
             if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio")
             {
-                RegularizacionPatrimonio(inscripcion,adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
+                RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
             }
             //PROCESANDO CASOS DE COMPRAVENTA
             if (inscripcion.NaturalezaEscritura == "Compraventa")
@@ -268,7 +268,7 @@ namespace SII_App_Grupo_5.Controllers
             }
         }
 
-        private List<Adquiriente> CreacionAdquirientes(   Inscripcion inscripcion, 
+        public List<Adquiriente> CreacionAdquirientes(   Inscripcion inscripcion, 
                                             List<Adquiriente> listaAdquirientes, 
                                             string[] adquirientesRut, 
                                             List<float> adquirientesPorcentajeDerechoFloat, 
@@ -290,7 +290,7 @@ namespace SII_App_Grupo_5.Controllers
             return listaAdquirientes;
         }
 
-        private List<Enajenante> CreacionEnajenantes(   Inscripcion inscripcion,
+        public List<Enajenante> CreacionEnajenantes(   Inscripcion inscripcion,
                                             List<Enajenante> listaEnajenantes,
                                             string[] enajenantesRut,
                                             List<float> enajenantesPorcentajeDerechoFloat,
@@ -307,8 +307,7 @@ namespace SII_App_Grupo_5.Controllers
             }
             return listaEnajenantes;
         }
-        private float RegularizacionPatrimonio(  Inscripcion inscripcion,
-                                                bool[] adquirientesAcreditado,
+        public float RegularizacionPatrimonio(  bool[] adquirientesAcreditado,
                                                 float totalPorcentajeDerecho,
                                                 int adquirientesNoAcreditados,
                                                 List<float> adquirientesPorcentajeDerechoFloat)
@@ -334,9 +333,9 @@ namespace SII_App_Grupo_5.Controllers
                 if (!adquirientesAcreditado[j])
                 {
                     adquirientesPorcentajeDerechoFloat[j] = parcialPorcentajeDerecho;
-                    //UNIT TEST
-                    porcentajeDerechoTest = adquirientesPorcentajeDerechoFloat[j];
                 }
+                //UNIT TEST
+                porcentajeDerechoTest = adquirientesPorcentajeDerechoFloat[j];
             }
             return porcentajeDerechoTest;
         }
@@ -422,7 +421,7 @@ namespace SII_App_Grupo_5.Controllers
             }
             else
             {
-                List<MultiPropietario> multipropietariosAfectados = new List<MultiPropietario>(); ;
+                List<MultiPropietario> multipropietariosAfectados = new List<MultiPropietario>(); 
                 MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
                 for (int j = 0; j < multipropietariosEnajenantes.Count(); j++)
                 {
@@ -537,7 +536,7 @@ namespace SII_App_Grupo_5.Controllers
             return porcentajeDerechoTest;
         }
 
-        private float CompraventaTransferenciaTotal( Inscripcion inscripcion,
+        public float CompraventaTransferenciaTotal( Inscripcion inscripcion,
                                                     List<float> adquirientesPorcentajeDerechoFloat,
                                                     string[] enajenantesRut)
         {
@@ -737,7 +736,7 @@ namespace SII_App_Grupo_5.Controllers
             }
             return porcentajeDerechoTest;
         }
-        private float CompraventaDominios(   Inscripcion inscripcion,
+        public float CompraventaDominios(   Inscripcion inscripcion,
                                             string[] enajenantesRut,
                                             List<float> enajenantesPorcentajeDerechoFloat
                                             )
@@ -801,7 +800,9 @@ namespace SII_App_Grupo_5.Controllers
             }
             return porcentajeDerechoTest;
         }
-        private MultiPropietario CrearMultiPropietario(Inscripcion inscripcion ,List<MultiPropietario> multipropietariosEnajenantes, int posicion)
+        public MultiPropietario CrearMultiPropietario(  Inscripcion inscripcion ,
+                                                        List<MultiPropietario> multipropietariosEnajenantes,
+                                                        int posicion)
         {
             MultiPropietario multiPropietarioNuevaVigencia = new MultiPropietario();
 
