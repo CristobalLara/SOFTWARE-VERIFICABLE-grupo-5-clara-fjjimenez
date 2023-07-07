@@ -12,11 +12,5 @@ namespace SII_App_Grupo_5.Models
         public string Rut { get; set; }
         public float PorcentajeDerecho { get; set; }
         public bool Acreditado { get; set; }
-
-        public Enajenante()
-        {
-            Rut = string.Empty;
-            Inscripcion = new Inscripcion();
-        }
     }
 }

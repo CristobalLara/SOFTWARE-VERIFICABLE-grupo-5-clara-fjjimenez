@@ -10,9 +10,5 @@ namespace SII_App_Grupo_5.Models
         public int Id { get; set; }
         public String Nombre { get; set; }
 
-        public Comuna()
-        {
-            Nombre = string.Empty;
-        }
     }
 }
