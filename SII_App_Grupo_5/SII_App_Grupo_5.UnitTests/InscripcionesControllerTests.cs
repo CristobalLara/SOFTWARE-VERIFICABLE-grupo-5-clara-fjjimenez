@@ -15,9 +15,6 @@ namespace SII_App_Grupo_5.UnitTests
         {
             _contexto = new InscriptionsGrupo5DbContext();
             _controller = new InscripcionesController(_contexto);
-
-            DateTime FechaInscripcion = DateTime.Now;
-
         }
 
         [TestMethod]
@@ -46,7 +43,7 @@ namespace SII_App_Grupo_5.UnitTests
             bool[] adquirientesAcreditado = new bool[] { true };
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
-            List<float> adquirientesPorcentajeDerechoFloat = new List<float> { 100.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new(){ 100.0f };
 
             float result = _controller!.RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
            
@@ -59,7 +56,7 @@ namespace SII_App_Grupo_5.UnitTests
             bool[] adquirientesAcreditado = new bool[] { true, true };
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
-            List<float> adquirientesPorcentajeDerechoFloat = new List<float> { 60.0f, 40.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new(){ 60.0f, 40.0f };
 
             float result = _controller!.RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
 
@@ -72,10 +69,10 @@ namespace SII_App_Grupo_5.UnitTests
         {
             // Arrange
             bool[] enajenantesAcreditado = new bool[] { true };
-            List<float> enajenantesPorcentajeDerechoFloat = new List<float> { 100.0f };
+            List<float> enajenantesPorcentajeDerechoFloat = new(){ 100.0f };
             string[] enajenantesRut = new string[] { "19189435-9" };
-            List<Enajenante> listaEnajenantes = new List<Enajenante>();
-            Inscripcion inscripcion = new Inscripcion
+            List<Enajenante> listaEnajenantes = new();
+            Inscripcion inscripcion = new()
             {
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Macul",
@@ -85,12 +82,15 @@ namespace SII_App_Grupo_5.UnitTests
                 NumeroInscripcion = 1,
                 FechaInscripcion = DateTime.Now
             };
-            List<Enajenante> listaEnajenantesMock = new List<Enajenante>();
-            Enajenante enajenanteEsperado = new Enajenante();
-            enajenanteEsperado.Rut = enajenantesRut[0];
-            enajenanteEsperado.PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[0];
-            enajenanteEsperado.Acreditado = enajenantesAcreditado[0];
-            enajenanteEsperado.InscripcionId = inscripcion.Folio;
+            List<Enajenante> listaEnajenantesMock = new();
+            Enajenante enajenanteEsperado = new()
+            {
+                Rut = enajenantesRut[0],
+                PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[0],
+                Acreditado = enajenantesAcreditado[0],
+                InscripcionId = inscripcion.Folio
+        };
+            
             listaEnajenantesMock.Add(enajenanteEsperado);
 
             // Act
@@ -106,10 +106,10 @@ namespace SII_App_Grupo_5.UnitTests
         public void CreacionAdquirientes_ReturnsAdquiriente()
         {
             bool[] adquirientesAcreditado = new bool[] { true };
-            List<float> adquirientesPorcentajeDerechoFloat = new List<float> { 100.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new() { 100.0f };
             string[] adquirientesRut = new string[] { "19189435-9" };
-            List<Adquiriente> listaAdquirientes = new List<Adquiriente>();
-            Inscripcion inscripcion = new Inscripcion
+            List<Adquiriente> listaAdquirientes = new();
+            Inscripcion inscripcion = new()
             {
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Macul",
@@ -120,12 +120,14 @@ namespace SII_App_Grupo_5.UnitTests
                 FechaInscripcion = DateTime.Now
             };
 
-            List<Adquiriente> listaAdquirientesMock = new List<Adquiriente>();
-            Adquiriente adquirienteEsperado = new Adquiriente();
-            adquirienteEsperado.Rut = adquirientesRut[0];
-            adquirienteEsperado.PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[0];
-            adquirienteEsperado.Acreditado = adquirientesAcreditado[0];
-            adquirienteEsperado.InscripcionId = inscripcion.Folio;
+            List<Adquiriente> listaAdquirientesMock = new();
+            Adquiriente adquirienteEsperado = new()
+            {
+                Rut = adquirientesRut[0],
+                PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[0],
+                Acreditado = adquirientesAcreditado[0],
+                InscripcionId = inscripcion.Folio
+        };
             listaAdquirientesMock.Add(adquirienteEsperado);
 
             List<Adquiriente> result = _controller!.CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
@@ -139,10 +141,9 @@ namespace SII_App_Grupo_5.UnitTests
         [TestCategory("Transferencia Total")]
         public void CompraventaTransferenciaTotal_ReturnsPorcentaje()
         {
-            bool[] adquirientesAcreditado = new bool[] { true };
-            List<float> adquirientesPorcentajeDerechoFloat = new List<float> { 100.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new(){ 100.0f };
             string[] enajenantesRut = new string[] { "19189435-9" };
-            Inscripcion inscripcion = new Inscripcion
+            Inscripcion inscripcion = new()
             {
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Macul",
@@ -160,9 +161,9 @@ namespace SII_App_Grupo_5.UnitTests
         [TestCategory("Transferencia Dominio")]
         public void CompraventaDominios_ReturnsPorcentaje()
         {
-            List<float> enajenantesPorcentajeDerechoFloat = new List<float> { 30.0f, 20.0f };
+            List<float> enajenantesPorcentajeDerechoFloat = new(){ 30.0f, 20.0f };
             string[] enajenantesRut = new string[] { "19189435-9", "10725958-9" };
-            Inscripcion inscripcion = new Inscripcion
+            Inscripcion inscripcion = new()
             {
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Macul",
@@ -181,7 +182,7 @@ namespace SII_App_Grupo_5.UnitTests
         public void CrearMultiPropietario_ReturnsMultipropietarion ()
         {
             DateTime FechaInscripcion = DateTime.Now;
-            Inscripcion inscripcionAdquiriente = new Inscripcion
+            Inscripcion inscripcionAdquiriente = new()
             { 
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Santiago",
@@ -192,7 +193,7 @@ namespace SII_App_Grupo_5.UnitTests
                 FechaInscripcion = FechaInscripcion
             };
 
-            MultiPropietario multiPropietario = new MultiPropietario
+            MultiPropietario multiPropietario = new()
             {
                 Comuna = "Santiago",
                 Manzana = 1,
@@ -206,8 +207,10 @@ namespace SII_App_Grupo_5.UnitTests
                 AnoVigenciaInicial = 2023
             };
 
-            List<MultiPropietario> multipropietarios = new List<MultiPropietario> { multiPropietario! };
-            MultiPropietario result = _controller!.CrearMultiPropietario( inscripcionAdquiriente! ,multipropietarios, 0);
+            List<MultiPropietario> multipropietarios = new() { multiPropietario! };
+            MultiPropietario result = _controller!.CrearMultiPropietario(inscripcionAdquiriente!,
+                                                                    multipropietarios,
+                                                                    0);
             Assert.AreEqual(result.Comuna, inscripcionAdquiriente!.Comuna);
             Assert.AreEqual(result.Manzana, inscripcionAdquiriente!.Manzana);
             Assert.AreEqual(result.Predio, inscripcionAdquiriente!.Predio);

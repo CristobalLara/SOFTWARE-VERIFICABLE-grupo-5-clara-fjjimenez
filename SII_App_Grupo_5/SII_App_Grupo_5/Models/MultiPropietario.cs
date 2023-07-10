@@ -21,10 +21,5 @@ namespace SII_App_Grupo_5.Models
         [DisplayFormat(NullDisplayText = "no tiene")]
         public int? AnoVigenciaFinal { get; set; }
 
-        public MultiPropietario()
-        {
-            Comuna = string.Empty;
-            RutPropietario = string.Empty;
-        }
     }
 }
