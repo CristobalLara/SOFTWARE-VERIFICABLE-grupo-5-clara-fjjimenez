@@ -6,7 +6,6 @@ namespace SII_App_Grupo_5.Data
     {
         public InscriptionsGrupo5DbContext(DbContextOptions<InscriptionsGrupo5DbContext> options) : base(options)
         {
-
         }
 
         public InscriptionsGrupo5DbContext()

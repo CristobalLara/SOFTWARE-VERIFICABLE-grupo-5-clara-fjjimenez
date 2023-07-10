@@ -154,7 +154,7 @@ namespace SII_App_Grupo_5.UnitTests
             };
 
             float result = _controller!.CompraventaTransferenciaTotal(inscripcion, adquirientesPorcentajeDerechoFloat, enajenantesRut);
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(result, 100.0f);
         }
         [TestMethod]
         [TestCategory("Transferencia Dominio")]
@@ -207,9 +207,7 @@ namespace SII_App_Grupo_5.UnitTests
             };
 
             List<MultiPropietario> multipropietarios = new List<MultiPropietario> { multiPropietario! };
-            MultiPropietario result = _controller!.CrearMultiPropietario(inscripcionAdquiriente!,
-                                                                    multipropietarios,
-                                                                    0);
+            MultiPropietario result = _controller!.CrearMultiPropietario( inscripcionAdquiriente! ,multipropietarios, 0);
             Assert.AreEqual(result.Comuna, inscripcionAdquiriente!.Comuna);
             Assert.AreEqual(result.Manzana, inscripcionAdquiriente!.Manzana);
             Assert.AreEqual(result.Predio, inscripcionAdquiriente!.Predio);
