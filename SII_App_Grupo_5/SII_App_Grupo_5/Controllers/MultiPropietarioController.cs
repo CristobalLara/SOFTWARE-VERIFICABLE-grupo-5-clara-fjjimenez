@@ -23,12 +23,10 @@ namespace SII_App_Grupo_5.Controllers
         public IActionResult Index(string searchComuna, string searchManzana, string searchPredio, 
             string searchAnoVigenciaInicial, string searchAnoVigenciaFinal)
         {
-            int searchManzanaInt, searchPredioInt, searchAnoVigenciaInicialInt, searchAnoVigenciaFinalInt;
-
-            bool isIntManzana = int.TryParse(searchManzana, out searchManzanaInt);
-            bool isIntPredio = int.TryParse(searchPredio, out searchPredioInt);
-            bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out searchAnoVigenciaInicialInt);
-            bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out searchAnoVigenciaFinalInt);
+            bool isIntManzana = int.TryParse(searchManzana, out int searchManzanaInt);
+            bool isIntPredio = int.TryParse(searchPredio, out int searchPredioInt);
+            bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out int searchAnoVigenciaInicialInt);
+            bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out int searchAnoVigenciaFinalInt);
 
             var multiPropietarios = _contexto.MultiPropietarios.ToList();
             if (searchComuna != null)

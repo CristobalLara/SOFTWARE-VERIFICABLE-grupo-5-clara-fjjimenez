@@ -107,13 +107,20 @@ namespace SII_App_Grupo_5.Controllers
 
             for (int i = 0; i < adquirientesRut.Length; i++)
             {
-                MultiPropietario multipropietario = new();
-                multipropietario.RutPropietario = adquirientesRut[i];
-                multipropietario.PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i];
-                multipropietario.Fojas = inscripcion.Fojas;
-                multipropietario.NumeroInscripcion = inscripcion.NumeroInscripcion;
-                multipropietario.FechaInscripcion = inscripcion.FechaInscripcion;
-                multipropietario.AnoInscripcion = inscripcion.FechaInscripcion.Year;
+                MultiPropietario multipropietario = new()
+                {
+                    RutPropietario = adquirientesRut[i],
+                    PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i],
+                    Fojas = inscripcion.Fojas,
+                    NumeroInscripcion = inscripcion.NumeroInscripcion,
+                    FechaInscripcion = inscripcion.FechaInscripcion,
+                    AnoInscripcion = inscripcion.FechaInscripcion.Year,
+                    AnoVigenciaFinal = null,
+                    Comuna = inscripcion.Comuna,
+                    Manzana = inscripcion.Manzana,
+                    Predio = inscripcion.Predio
+                };
+                
                 if (inscripcion.FechaInscripcion <= fechaTope)
                 {
                     multipropietario.AnoVigenciaInicial = anoTope;
@@ -123,10 +130,7 @@ namespace SII_App_Grupo_5.Controllers
                     multipropietario.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
                 }
 
-                multipropietario.AnoVigenciaFinal = null;
-                multipropietario.Comuna = inscripcion.Comuna;
-                multipropietario.Manzana = inscripcion.Manzana;
-                multipropietario.Predio = inscripcion.Predio;
+                
                 _contexto.MultiPropietarios.AddRange(multipropietario);
 
                 //MANEJANDO MULTIPROPIETARIOS DUPLICADOS (MERGE)
@@ -247,7 +251,7 @@ namespace SII_App_Grupo_5.Controllers
         }
 
         // Funciones Encapsuladoras
-        private List<float> PorcentajeStringAFloat(string[] stringList)
+        static private List<float> PorcentajeStringAFloat(string[] stringList)
         {
             List<float> floatList = new();
             foreach (string percentage in stringList)
@@ -276,11 +280,14 @@ namespace SII_App_Grupo_5.Controllers
         {
             for (int i = 0; i < adquirientesRut.Length ; i++)
             {
-                Adquiriente adquiriente = new();
-                adquiriente.Rut = adquirientesRut[i];
-                adquiriente.PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i];
-                adquiriente.Acreditado = adquirientesAcreditado[i];
-                adquiriente.InscripcionId = inscripcion.Folio;
+                Adquiriente adquiriente = new()
+                {
+                    Rut = adquirientesRut[i],
+                    PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i],
+                    Acreditado = adquirientesAcreditado[i],
+                    InscripcionId = inscripcion.Folio
+            };
+                
                 if (!adquiriente.Acreditado)
                 {
                     adquiriente.PorcentajeDerecho = 0;
@@ -298,11 +305,14 @@ namespace SII_App_Grupo_5.Controllers
         {
             for (int i = 0; i < enajenantesRut.Length; i++)
             {
-                Enajenante enajenante = new();
-                enajenante.Rut = enajenantesRut[i];
-                enajenante.PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[i];
-                enajenante.Acreditado = enajenantesAcreditado[i];
-                enajenante.InscripcionId = inscripcion.Folio;
+                Enajenante enajenante = new()
+                {
+                    Rut = enajenantesRut[i],
+                    PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[i],
+                    Acreditado = enajenantesAcreditado[i],
+                    InscripcionId = inscripcion.Folio
+            };
+                
                 listaEnajenantes.Add(enajenante);
             }
             return listaEnajenantes;
@@ -628,14 +638,20 @@ namespace SII_App_Grupo_5.Controllers
                                 mp.AnoVigenciaFinal == null).ToList();
 
 
-            MultiPropietario multiPropietarioNuevaVigencia = new();
-
-            multiPropietarioNuevaVigencia.RutPropietario = enajenantesRut[0];
-            multiPropietarioNuevaVigencia.Fojas = inscripcion.Fojas;
-            multiPropietarioNuevaVigencia.NumeroInscripcion = null;
-            multiPropietarioNuevaVigencia.PorcentajeDerecho = 100 - adquirientesPorcentajeDerechoFloat[0];
-            multiPropietarioNuevaVigencia.FechaInscripcion = inscripcion.FechaInscripcion;
-            multiPropietarioNuevaVigencia.AnoInscripcion = null;
+            MultiPropietario multiPropietarioNuevaVigencia = new()
+            {
+                RutPropietario = enajenantesRut[0],
+                Fojas = inscripcion.Fojas,
+                NumeroInscripcion = null,
+                PorcentajeDerecho = 100 - adquirientesPorcentajeDerechoFloat[0],
+                FechaInscripcion = inscripcion.FechaInscripcion,
+                AnoInscripcion = null,
+                AnoVigenciaFinal = null,
+                Comuna = inscripcion.Comuna,
+                Manzana = inscripcion.Manzana,
+                Predio = inscripcion.Predio
+            };
+            
             if (inscripcion.FechaInscripcion <= fechaTope)
             {
                 multiPropietarioNuevaVigencia.AnoVigenciaInicial = anoTope;
@@ -644,10 +660,7 @@ namespace SII_App_Grupo_5.Controllers
             {
                 multiPropietarioNuevaVigencia.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
             }
-            multiPropietarioNuevaVigencia.AnoVigenciaFinal = null;
-            multiPropietarioNuevaVigencia.Comuna = inscripcion.Comuna;
-            multiPropietarioNuevaVigencia.Manzana = inscripcion.Manzana;
-            multiPropietarioNuevaVigencia.Predio = inscripcion.Predio;
+            
             _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
             //UNIT TEST
             porcentajeDerechoTest = multiPropietarioNuevaVigencia.PorcentajeDerecho;
@@ -804,19 +817,20 @@ namespace SII_App_Grupo_5.Controllers
                                                         List<MultiPropietario> multipropietariosEnajenantes,
                                                         int posicion)
         {
-            MultiPropietario multiPropietarioNuevaVigencia = new();
-
-            multiPropietarioNuevaVigencia.RutPropietario = multipropietariosEnajenantes[posicion].RutPropietario;
-            multiPropietarioNuevaVigencia.PorcentajeDerecho = multipropietariosEnajenantes[posicion].PorcentajeDerecho;
-            multiPropietarioNuevaVigencia.Fojas = multipropietariosEnajenantes[posicion].Fojas;
-            multiPropietarioNuevaVigencia.NumeroInscripcion = multipropietariosEnajenantes[posicion].NumeroInscripcion;
-            multiPropietarioNuevaVigencia.FechaInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion;
-            multiPropietarioNuevaVigencia.AnoInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion.Year;
-            multiPropietarioNuevaVigencia.AnoVigenciaInicial = inscripcion.FechaInscripcion.Year;
-            multiPropietarioNuevaVigencia.AnoVigenciaFinal = null;
-            multiPropietarioNuevaVigencia.Comuna = inscripcion.Comuna;
-            multiPropietarioNuevaVigencia.Manzana = inscripcion.Manzana;
-            multiPropietarioNuevaVigencia.Predio = inscripcion.Predio;
+            MultiPropietario multiPropietarioNuevaVigencia = new()
+            {
+                RutPropietario = multipropietariosEnajenantes[posicion].RutPropietario,
+                PorcentajeDerecho = multipropietariosEnajenantes[posicion].PorcentajeDerecho,
+                Fojas = multipropietariosEnajenantes[posicion].Fojas,
+                NumeroInscripcion = multipropietariosEnajenantes[posicion].NumeroInscripcion,
+                FechaInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion,
+                AnoInscripcion = multipropietariosEnajenantes[posicion].FechaInscripcion.Year,
+                AnoVigenciaInicial = inscripcion.FechaInscripcion.Year,
+                AnoVigenciaFinal = null,
+                Comuna = inscripcion.Comuna,
+                Manzana = inscripcion.Manzana,
+                Predio = inscripcion.Predio
+            };
             multipropietariosEnajenantes[posicion].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year - 1;
             return multiPropietarioNuevaVigencia;
         }

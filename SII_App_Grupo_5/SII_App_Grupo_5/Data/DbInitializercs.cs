@@ -43,7 +43,7 @@ namespace SII_App_Grupo_5.Data
             };
             context.MultiPropietarios.AddRange(multiPropietario);
 
-            List<String> ListaComunas = new List<String>()
+            List<String> ListaComunas = new()
                     {
                         //Región Metropolitana
                         "Santiago", "Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia",
