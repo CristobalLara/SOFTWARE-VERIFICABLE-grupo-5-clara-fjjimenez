@@ -1,60 +1,160 @@
-﻿@model SII_App_Grupo_5.Models.Inscripcion
+﻿@model IEnumerable<SII_App_Grupo_5.Models.Inscripcion>
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Details</h1>
+<h1>Inscripciones</h1>
 
-<div>
-    <h4>Inscripcion</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NaturalezaEscritura)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NaturalezaEscritura)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comuna)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comuna)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Manzana)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Manzana)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Predio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Predio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaInscripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaInscripcion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fojas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fojas)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumeroInscripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumeroInscripcion)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Folio">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NaturalezaEscritura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comuna)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manzana)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Predio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInscripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fojas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroInscripcion)
+            </th>
+            <th>
+                Rut
+            </th>
+            <th>
+                Porcentaje de Derecho
+            </th>
+            <th>
+                Acreditado
+            </th>
+            <th>
+                Participante
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    if(item.Enajenantes.Count()>0){
+
+        @foreach (var enajenante in item.Enajenantes)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comuna)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manzana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Predio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fojas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => enajenante.Rut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => enajenante.PorcentajeDerecho)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => enajenante.Acreditado)
+            </td>
+            <td>
+                Enajenante
+            </td>
+        </tr>
+        }
+    }
+    if(item.Adquirientes.Count()>0){
+        
+        @foreach (var adquiriente in item.Adquirientes)
+        {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Comuna)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Manzana)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Predio)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Fojas)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NumeroInscripcion)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => adquiriente.Rut)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => adquiriente.PorcentajeDerecho)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => adquiriente.Acreditado)
+            </td>
+            <td>
+                Adquiriente
+            </td>
+        </tr>
+        }
+        
+    }
+    if(item.Adquirientes.Count()==0 && item.Enajenantes.Count()==0){
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Comuna)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Manzana)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Predio)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Fojas)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NumeroInscripcion)
+            </td>
+        </tr>
+    }    
+}
+    </tbody>
+</table>

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace SII_App_Grupo_5.Controllers
 {
@@ -24,7 +25,10 @@ namespace SII_App_Grupo_5.Controllers
         public IActionResult Index()
         {
             IEnumerable<Inscripcion> inscripciones = _contexto.Inscripciones.ToList();
-            return View(inscripciones);
+            var inscripcionesFiltradas = inscripciones.GroupBy(i => i.NumeroInscripcion)
+                                          .Select(g => g.First());
+            return View(inscripcionesFiltradas);
+            
         }
 
         public IActionResult Create()
@@ -35,10 +39,20 @@ namespace SII_App_Grupo_5.Controllers
         }
 
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int? id)
         {
-            var inscripcion = _contexto.Inscripciones.FirstOrDefault(i => i.Folio == Id);
-            return View(inscripcion);
+            if (id == null || _contexto.Enajenantes == null)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Inscripcion> inscripciones = _contexto.Inscripciones.Where(i => i.NumeroInscripcion == id).ToList();
+            if ( inscripciones.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            
+            return View(inscripciones);
         }
 
 
@@ -218,6 +232,7 @@ namespace SII_App_Grupo_5.Controllers
             if (sumaPorcAdquirientes > 100)
             {
                 ModelState.AddModelError(string.Empty, "La Suma de los porcentajes de derecho para los Adquirientes no puede pasar el 100%");
+                _contexto.Inscripciones.Remove(inscripcion);
                 ViewBag.Comunas = _contexto.Comunas;
                 return View();
             }
@@ -225,6 +240,7 @@ namespace SII_App_Grupo_5.Controllers
             if (sumaPorcEnajenantes > 100)
             {
                 ModelState.AddModelError(string.Empty, "La Suma de los porcentajes de derecho para los Enajenantes no puede pasar el 100%");
+                _contexto.Inscripciones.Remove(inscripcion);
                 //SE OBTIENEN LAS COMUNAS PARA EL COMONBOX
                 ViewBag.Comunas = _contexto.Comunas;
                 return View();
@@ -233,6 +249,7 @@ namespace SII_App_Grupo_5.Controllers
             if (inscripcion.NaturalezaEscritura == "RegularizacionPatrimonio" && listaEnajenantes.Count > 0)
             {
                 ModelState.AddModelError(string.Empty, "Regularizacion de Patrimonio no usa Enajenantes");
+                _contexto.Inscripciones.Remove(inscripcion);
                 //SE OBTIENEN LAS COMUNAS PARA EL COMONBOX
                 ViewBag.Comunas = _contexto.Comunas;
                 return View();
@@ -241,6 +258,7 @@ namespace SII_App_Grupo_5.Controllers
             if (inscripcion.Comuna == null)
             {
                 ModelState.AddModelError(string.Empty, "Debe ingresar una comuna");
+                _contexto.Inscripciones.Remove(inscripcion);
                 //SE OBTIENEN LAS COMUNAS PARA EL COMONBOX
                 ViewBag.Comunas = _contexto.Comunas;
                 return View();
@@ -285,8 +303,9 @@ namespace SII_App_Grupo_5.Controllers
                     Rut = adquirientesRut[i],
                     PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[i],
                     Acreditado = adquirientesAcreditado[i],
-                    InscripcionId = inscripcion.Folio
-            };
+                    InscripcionId = inscripcion.Folio,
+                    Inscripcion = inscripcion
+                };
                 
                 if (!adquiriente.Acreditado)
                 {
@@ -310,8 +329,9 @@ namespace SII_App_Grupo_5.Controllers
                     Rut = enajenantesRut[i],
                     PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[i],
                     Acreditado = enajenantesAcreditado[i],
-                    InscripcionId = inscripcion.Folio
-            };
+                    InscripcionId = inscripcion.Folio,
+                    Inscripcion = inscripcion
+                };
                 
                 listaEnajenantes.Add(enajenante);
             }
@@ -597,6 +617,8 @@ namespace SII_App_Grupo_5.Controllers
                         else
                         {
                             multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, i);
+
+                            multiPropietarioNuevaVigencia.Comuna = "Manguaco";
 
                             if (enajenantesRut[j] == multipropietariosEnajenantes[i].RutPropietario)
                             {

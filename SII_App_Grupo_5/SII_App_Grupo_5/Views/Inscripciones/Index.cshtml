@@ -6,12 +6,12 @@
 
 <h1>Inscripciones</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Folio)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.NaturalezaEscritura)
             </th>
@@ -33,69 +33,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.NumeroInscripcion)
             </th>
-            <th>
-                Rut
-            </th>
-            <th>
-                Porcentaje de Derecho
-            </th>
-            <th>
-                Acreditado
-            </th>
-            <th>
-                Participante
-            </th>
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    if(item.Enajenantes.Count()>0){
-
-        @foreach (var enajenante in item.Enajenantes)
-        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
+                    @Html.DisplayFor(modelItem => item.Folio)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comuna)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manzana)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Predio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInscripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fojas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroInscripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => enajenante.Rut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => enajenante.PorcentajeDerecho)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => enajenante.Acreditado)
-            </td>
-            <td>
-                Enajenante
-            </td>
-        </tr>
-        }
-    }
-    if(item.Adquirientes.Count()>0){
-        
-        @foreach (var adquiriente in item.Adquirientes)
-        {
-        <tr>
             <td>
                     @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
             </td>
@@ -118,46 +64,9 @@
                     @Html.DisplayFor(modelItem => item.NumeroInscripcion)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => adquiriente.Rut)
+                <a asp-action="Details" asp-route-id="@item.NumeroInscripcion">Details</a> 
             </td>
-            <td>
-                    @Html.DisplayFor(modelItem => adquiriente.PorcentajeDerecho)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => adquiriente.Acreditado)
-            </td>
-            <td>
-                Adquiriente
-            </td>
-        </tr>
-        }
-        
-    }
-    if(item.Adquirientes.Count()==0 && item.Enajenantes.Count()==0){
-        <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.NaturalezaEscritura)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Comuna)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Manzana)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Predio)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Fojas)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.NumeroInscripcion)
-            </td>
-        </tr>
-    }    
+        </tr>  
 }
     </tbody>
 </table>
