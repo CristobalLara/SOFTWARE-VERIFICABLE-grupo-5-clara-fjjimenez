@@ -242,22 +242,18 @@ namespace SII_App_Grupo_5.UnitTests
             bool isIntManzana = false;
             bool isIntPredio = false;
             bool isIntAVI = false;
-            bool isIntAVF = false;
             string searchComuna = "Santiago";
             string searchManzana = "";
             string searchPredio = "";
-            string searchAnoVigenciaInicial = "";
-            string searchAnoVigenciaFinal = "";
+            int anoVigencia = 2023;
 
             List<MultiPropietario> result = _controllerMP.IntIsValid(   isIntManzana,
                                                                         isIntPredio,
                                                                         isIntAVI,
-                                                                        isIntAVF,
                                                                         searchComuna,
                                                                         searchManzana,
                                                                         searchPredio,
-                                                                        searchAnoVigenciaInicial,
-                                                                        searchAnoVigenciaFinal);
+                                                                        anoVigencia);
 
             Assert.AreEqual(result[0].Comuna, "Santiago");
         }
