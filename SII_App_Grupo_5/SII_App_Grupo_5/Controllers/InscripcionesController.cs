@@ -348,7 +348,7 @@ namespace SII_App_Grupo_5.Controllers
             {
                 if (adquirientesAcreditado[i])
                 {
-                    totalPorcentajeDerecho =- adquirientesPorcentajeDerechoFloat[i];
+                    totalPorcentajeDerecho -= adquirientesPorcentajeDerechoFloat[i];
                 }
                 else
                 {
@@ -422,11 +422,11 @@ namespace SII_App_Grupo_5.Controllers
             {
                 for (int j = 0; j < multipropietariosEnajenantes.Count; j++)
                 {
-                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal += multipropietariosEnajenantes[j].PorcentajeDerecho;
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count; k++)
                 {
-                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal += adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -455,13 +455,13 @@ namespace SII_App_Grupo_5.Controllers
                 MultiPropietario multiPropietarioNuevaVigencia = new();
                 for (int j = 0; j < multipropietariosEnajenantes.Count; j++)
                 {
-                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal += multipropietariosEnajenantes[j].PorcentajeDerecho;
                     multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
                     multipropietariosAfectados.Add(multiPropietarioNuevaVigencia);
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count; k++)
                 {
-                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal += adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -501,11 +501,11 @@ namespace SII_App_Grupo_5.Controllers
             {
                 for (int j = 0; j < multipropietariosEnajenantes.Count; j++)
                 {
-                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal += multipropietariosEnajenantes[j].PorcentajeDerecho;
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count; k++)
                 {
-                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal += adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -534,7 +534,7 @@ namespace SII_App_Grupo_5.Controllers
                 MultiPropietario multiPropietarioNuevaVigencia = new();
                 for (int j = 0; j < multipropietariosEnajenantes.Count; j++)
                 {
-                    transferenciaTotal =+ multipropietariosEnajenantes[j].PorcentajeDerecho;
+                    transferenciaTotal += multipropietariosEnajenantes[j].PorcentajeDerecho;
                     multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, j);
                     for (int k = 0; k < enajenantesRut.Length; k++)
                     {
@@ -547,7 +547,7 @@ namespace SII_App_Grupo_5.Controllers
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count; k++)
                 {
-                    transferenciaTotal =+ adquirientesPorcentajeDerechoFloat[k];
+                    transferenciaTotal += adquirientesPorcentajeDerechoFloat[k];
                 }
 
                 divisor = transferenciaTotal / 100;
@@ -593,8 +593,7 @@ namespace SII_App_Grupo_5.Controllers
                         mp.AnoVigenciaFinal == null).ToList();
 
                 float transferenciaTotal = 0;
-                bool porBorrar = false;
-                MultiPropietario multiPropietarioNuevaVigencia = new();
+                
                 for (int i = 0; i < multipropietariosEnajenantes.Count; i++)
                 {
                     for (int j = 0; j < enajenantesRut.Length; j++)
@@ -603,35 +602,22 @@ namespace SII_App_Grupo_5.Controllers
                         {
                             if (multipropietariosEnajenantes[i].RutPropietario == enajenantesRut[j])
                             {
-                                transferenciaTotal =+ multipropietariosEnajenantes[i].PorcentajeDerecho;
+                                transferenciaTotal += multipropietariosEnajenantes[i].PorcentajeDerecho;
                                 
                                 _contexto.MultiPropietarios.Remove(multipropietariosEnajenantes[i]);
                                 break;
                             }
                             else
                             {
-                                multipropietariosEnajenantes[i].AnoVigenciaFinal = inscripcion.FechaInscripcion.Year;
                                 break;
                             }
                         }
                         else
                         {
+                            MultiPropietario multiPropietarioNuevaVigencia = new();
                             multiPropietarioNuevaVigencia = CrearMultiPropietario(inscripcion, multipropietariosEnajenantes, i);
-
-                            multiPropietarioNuevaVigencia.Comuna = "Manguaco";
-
-                            if (enajenantesRut[j] == multipropietariosEnajenantes[i].RutPropietario)
-                            {
-                                porBorrar = true;
-                            }
+                            _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
                         }
-                    }
-                    _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
-                    if (porBorrar)
-                    {
-                        transferenciaTotal =+ multiPropietarioNuevaVigencia.PorcentajeDerecho;                        
-                        _contexto.MultiPropietarios.Remove(multiPropietarioNuevaVigencia);
-                        porBorrar = false;
                     }
                 }
                 for (int k = 0; k < adquirientesPorcentajeDerechoFloat.Count; k++)
@@ -760,7 +746,7 @@ namespace SII_App_Grupo_5.Controllers
                         else
                         {
                             float Derechos = multiPropietarioNuevaVigencia.PorcentajeDerecho * (enajenantesPorcentajeDerechoFloat[0] / 100);
-                            multiPropietarioNuevaVigencia.PorcentajeDerecho =- Derechos;
+                            multiPropietarioNuevaVigencia.PorcentajeDerecho -= Derechos;
                             _contexto.MultiPropietarios.AddRange(multiPropietarioNuevaVigencia);
                             adquirientesPorcentajeDerechoFloat[0] = Derechos;
                             //UNIT TEST
@@ -796,7 +782,7 @@ namespace SII_App_Grupo_5.Controllers
 
                         if (multipropietariosEnajenantes[j].RutPropietario == enajenantesRut[i])
                         {
-                            multipropietariosEnajenantes[j].PorcentajeDerecho =- Dominios;
+                            multipropietariosEnajenantes[j].PorcentajeDerecho -= Dominios;
                             //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
                             if (multipropietariosEnajenantes[j].PorcentajeDerecho < 0)
                             {
@@ -817,7 +803,7 @@ namespace SII_App_Grupo_5.Controllers
                         }
                         else
                         {
-                            multiPropietarioNuevaVigencia.PorcentajeDerecho =- Dominios;
+                            multiPropietarioNuevaVigencia.PorcentajeDerecho -= Dominios;
                             //MANEJANDO MULTIPROPIETARIOS NEGATIVOS
                             if (multiPropietarioNuevaVigencia.PorcentajeDerecho < 0)
                             {
