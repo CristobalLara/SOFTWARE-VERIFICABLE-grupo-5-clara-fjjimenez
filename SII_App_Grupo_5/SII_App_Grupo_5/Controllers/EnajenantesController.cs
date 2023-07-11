@@ -12,9 +12,9 @@ namespace SII_App_Grupo_5.Controllers
 {
     public class EnajenantesController : Controller
     {
-        private readonly InscriptionsGrupo5DbContext _context;
+        private readonly InscripcionesGrupo5DbContext _context;
 
-        public EnajenantesController(InscriptionsGrupo5DbContext context)
+        public EnajenantesController(InscripcionesGrupo5DbContext context)
         {
             _context = context;
         }

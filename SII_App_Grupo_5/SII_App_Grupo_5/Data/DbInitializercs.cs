@@ -8,7 +8,7 @@ namespace SII_App_Grupo_5.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(InscriptionsGrupo5DbContext context)
+        public static void Initialize(InscripcionesGrupo5DbContext context)
         {
 
             if (context.Inscripciones.Any())

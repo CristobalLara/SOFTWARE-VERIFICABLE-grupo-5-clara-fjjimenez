@@ -12,12 +12,12 @@ namespace SII_App_Grupo_5.Controllers
 {
     public class InscripcionesController : Controller
     {
-        public InscriptionsGrupo5DbContext _contexto;
+        public InscripcionesGrupo5DbContext _contexto;
 
         public DateTime fechaTope = new(2019, 1, 1);
 
         public int anoTope = 2019;
-        public InscripcionesController(InscriptionsGrupo5DbContext contexto)
+        public InscripcionesController(InscripcionesGrupo5DbContext contexto)
         {
             _contexto = contexto;
         }
@@ -251,7 +251,7 @@ namespace SII_App_Grupo_5.Controllers
         }
 
         // Funciones Encapsuladoras
-        static private List<float> PorcentajeStringAFloat(string[] stringList)
+        public List<float> PorcentajeStringAFloat(string[] stringList)
         {
             List<float> floatList = new();
             foreach (string percentage in stringList)

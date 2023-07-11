@@ -6,8 +6,8 @@ namespace SII_App_Grupo_5.Controllers
 {
     public class MultiPropietarioController : Controller
     {
-        public InscriptionsGrupo5DbContext _contexto;
-        public MultiPropietarioController(InscriptionsGrupo5DbContext contexto)
+        public InscripcionesGrupo5DbContext _contexto;
+        public MultiPropietarioController(InscripcionesGrupo5DbContext contexto)
         {
             _contexto = contexto;
         }
@@ -20,19 +20,42 @@ namespace SII_App_Grupo_5.Controllers
             return View(multiPropietarios);
         }
         [HttpPost]
-        public IActionResult Index(string searchComuna, string searchManzana, string searchPredio, 
+        public IActionResult Index(string searchComuna, string searchManzana, string searchPredio,
             string searchAnoVigenciaInicial, string searchAnoVigenciaFinal)
         {
-            bool isIntManzana = int.TryParse(searchManzana, out int searchManzanaInt);
-            bool isIntPredio = int.TryParse(searchPredio, out int searchPredioInt);
-            bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out int searchAnoVigenciaInicialInt);
-            bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out int searchAnoVigenciaFinalInt);
+            bool isIntManzana = int.TryParse(searchManzana, out _);
+            bool isIntPredio = int.TryParse(searchPredio, out _);
+            bool isIntAVI = int.TryParse(searchAnoVigenciaInicial, out _);
+            bool isIntAVF = int.TryParse(searchAnoVigenciaFinal, out _);
 
+            List<MultiPropietario> multiPropietarios = IntIsValid(isIntManzana,
+                                            isIntPredio,
+                                            isIntAVI,
+                                            isIntAVF,
+                                            searchComuna,
+                                            searchManzana,
+                                            searchPredio,
+                                            searchAnoVigenciaInicial,
+                                            searchAnoVigenciaFinal);
+            ViewBag.Comunas = _contexto.Comunas;
+            return View(multiPropietarios);
+        }
+
+        public List<MultiPropietario> IntIsValid(bool isIntManzana,
+                                           bool isIntPredio,
+                                           bool isIntAVI,
+                                           bool isIntAVF,
+                                           string searchComuna,
+                                           string searchManzana,
+                                           string searchPredio,
+                                           string searchAnoVigenciaInicial,
+                                           string searchAnoVigenciaFinal)
+        {
             var multiPropietarios = _contexto.MultiPropietarios.ToList();
             if (searchComuna != null)
             {
-                 multiPropietarios = multiPropietarios
-                .Where(i => (i.Comuna.Contains(searchComuna))).ToList();
+                multiPropietarios = multiPropietarios
+               .Where(i => (i.Comuna.Contains(searchComuna))).ToList();
             }
             if (isIntManzana)
             {
@@ -54,8 +77,7 @@ namespace SII_App_Grupo_5.Controllers
                 multiPropietarios = multiPropietarios
                .Where(i => (i.AnoVigenciaFinal?.ToString().Contains(searchAnoVigenciaFinal) ?? false)).ToList();
             }
-            ViewBag.Comunas = _contexto.Comunas;
-            return View(multiPropietarios);
+            return multiPropietarios;
         }
     }
 }

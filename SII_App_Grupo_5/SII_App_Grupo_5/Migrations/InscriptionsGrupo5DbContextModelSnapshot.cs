@@ -10,7 +10,7 @@ using SII_App_Grupo_5.Data;
 
 namespace SII_App_Grupo_5.Migrations
 {
-    [DbContext(typeof(InscriptionsGrupo5DbContext))]
+    [DbContext(typeof(InscripcionesGrupo5DbContext))]
     partial class InscriptionsGrupo5DbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -1,19 +1,23 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SII_App_Grupo_5.Controllers;
 using SII_App_Grupo_5.Data;
 using SII_App_Grupo_5.Models;
+using System.Linq;
 
 namespace SII_App_Grupo_5.UnitTests
 {
     [TestClass]
     public class InscripcionesControllerTests
     {
-        public InscriptionsGrupo5DbContext? _contexto;
+        public InscripcionesGrupo5DbContext? _contexto;
         public InscripcionesController? _controller;
 
         [TestInitialize]
         public void Initialize()
         {
-            _contexto = new InscriptionsGrupo5DbContext();
+            _contexto = new InscripcionesGrupo5DbContext();
             _controller = new InscripcionesController(_contexto);
         }
 
@@ -43,10 +47,10 @@ namespace SII_App_Grupo_5.UnitTests
             bool[] adquirientesAcreditado = new bool[] { true };
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
-            List<float> adquirientesPorcentajeDerechoFloat = new(){ 100.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new() { 100.0f };
 
             float result = _controller!.RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
-           
+
             Assert.AreEqual(result, 100.0f);
         }
         [TestMethod]
@@ -56,7 +60,7 @@ namespace SII_App_Grupo_5.UnitTests
             bool[] adquirientesAcreditado = new bool[] { true, true };
             float totalPorcentajeDerecho = 100;
             int adquirientesNoAcreditados = 0;
-            List<float> adquirientesPorcentajeDerechoFloat = new(){ 60.0f, 40.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new() { 60.0f, 40.0f };
 
             float result = _controller!.RegularizacionPatrimonio(adquirientesAcreditado, totalPorcentajeDerecho, adquirientesNoAcreditados, adquirientesPorcentajeDerechoFloat);
 
@@ -69,7 +73,7 @@ namespace SII_App_Grupo_5.UnitTests
         {
             // Arrange
             bool[] enajenantesAcreditado = new bool[] { true };
-            List<float> enajenantesPorcentajeDerechoFloat = new(){ 100.0f };
+            List<float> enajenantesPorcentajeDerechoFloat = new() { 100.0f };
             string[] enajenantesRut = new string[] { "19189435-9" };
             List<Enajenante> listaEnajenantes = new();
             Inscripcion inscripcion = new()
@@ -89,8 +93,8 @@ namespace SII_App_Grupo_5.UnitTests
                 PorcentajeDerecho = enajenantesPorcentajeDerechoFloat[0],
                 Acreditado = enajenantesAcreditado[0],
                 InscripcionId = inscripcion.Folio
-        };
-            
+            };
+
             listaEnajenantesMock.Add(enajenanteEsperado);
 
             // Act
@@ -127,7 +131,7 @@ namespace SII_App_Grupo_5.UnitTests
                 PorcentajeDerecho = adquirientesPorcentajeDerechoFloat[0],
                 Acreditado = adquirientesAcreditado[0],
                 InscripcionId = inscripcion.Folio
-        };
+            };
             listaAdquirientesMock.Add(adquirienteEsperado);
 
             List<Adquiriente> result = _controller!.CreacionAdquirientes(inscripcion, listaAdquirientes, adquirientesRut, adquirientesPorcentajeDerechoFloat, adquirientesAcreditado);
@@ -141,7 +145,7 @@ namespace SII_App_Grupo_5.UnitTests
         [TestCategory("Transferencia Total")]
         public void CompraventaTransferenciaTotal_ReturnsPorcentaje()
         {
-            List<float> adquirientesPorcentajeDerechoFloat = new(){ 100.0f };
+            List<float> adquirientesPorcentajeDerechoFloat = new() { 100.0f };
             string[] enajenantesRut = new string[] { "19189435-9" };
             Inscripcion inscripcion = new()
             {
@@ -161,7 +165,7 @@ namespace SII_App_Grupo_5.UnitTests
         [TestCategory("Transferencia Dominio")]
         public void CompraventaDominios_ReturnsPorcentaje()
         {
-            List<float> enajenantesPorcentajeDerechoFloat = new(){ 30.0f, 20.0f };
+            List<float> enajenantesPorcentajeDerechoFloat = new() { 30.0f, 20.0f };
             string[] enajenantesRut = new string[] { "19189435-9", "10725958-9" };
             Inscripcion inscripcion = new()
             {
@@ -179,11 +183,11 @@ namespace SII_App_Grupo_5.UnitTests
         }
 
         [TestMethod]
-        public void CrearMultiPropietario_ReturnsMultipropietarion ()
+        public void CrearMultiPropietario_ReturnsMultipropietarion()
         {
             DateTime FechaInscripcion = DateTime.Now;
             Inscripcion inscripcionAdquiriente = new()
-            { 
+            {
                 NaturalezaEscritura = "Compraventa",
                 Comuna = "Santiago",
                 Manzana = 1,
@@ -217,6 +221,45 @@ namespace SII_App_Grupo_5.UnitTests
             Assert.AreEqual(result.Fojas, inscripcionAdquiriente!.Fojas);
             Assert.AreEqual(result.NumeroInscripcion, inscripcionAdquiriente!.NumeroInscripcion);
             Assert.AreEqual(result.FechaInscripcion, inscripcionAdquiriente!.FechaInscripcion);
+        }
+
+        [TestMethod]
+        [TestCategory("Float")]
+        public void PorcentajeStringAFloat_ReturnsFloat()
+        {
+            string[] stringTestValid = { "94,5" };
+            List<float> result = _controller!.PorcentajeStringAFloat(stringTestValid);
+
+            Assert.AreEqual(result[0], 94.5);
+        }
+
+        [TestMethod]
+        [TestCategory("MultiPropietario Buscador")]
+        public void MultiPropietarioBuscador_ReturnsSantiago()
+        {
+            MultiPropietarioController _controllerMP = new(_contexto!);
+
+            bool isIntManzana = false;
+            bool isIntPredio = false;
+            bool isIntAVI = false;
+            bool isIntAVF = false;
+            string searchComuna = "Santiago";
+            string searchManzana = "";
+            string searchPredio = "";
+            string searchAnoVigenciaInicial = "";
+            string searchAnoVigenciaFinal = "";
+
+            List<MultiPropietario> result = _controllerMP.IntIsValid(   isIntManzana,
+                                                                        isIntPredio,
+                                                                        isIntAVI,
+                                                                        isIntAVF,
+                                                                        searchComuna,
+                                                                        searchManzana,
+                                                                        searchPredio,
+                                                                        searchAnoVigenciaInicial,
+                                                                        searchAnoVigenciaFinal);
+
+            Assert.AreEqual(result[0].Comuna, "Santiago");
         }
     }
 

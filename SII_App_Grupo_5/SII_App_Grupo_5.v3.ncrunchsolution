@@ -1,6 +1,16 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>Program.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+      <Value>SII_App_Grupo_5\SII_App_Grupo_5.csproj\Migrations</Value>
+      <Value>SII_App_Grupo_5\SII_App_Grupo_5.csproj\obj</Value>
+      <Value>Controllers\HomeController.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+      <Value>Data\DbInitializercs.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+      <Value>Models\ErrorViewModel.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+      <Value>Controllers\AdquirientesController.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+      <Value>Controllers\EnajenantesController.cs:SII_App_Grupo_5\SII_App_Grupo_5.csproj</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>

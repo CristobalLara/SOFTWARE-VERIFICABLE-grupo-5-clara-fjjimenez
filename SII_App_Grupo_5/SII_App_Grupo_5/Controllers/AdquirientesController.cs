@@ -12,9 +12,9 @@ namespace SII_App_Grupo_5.Controllers
 {
     public class AdquirientesController : Controller
     {
-        private readonly InscriptionsGrupo5DbContext _context;
+        private readonly InscripcionesGrupo5DbContext _context;
 
-        public AdquirientesController(InscriptionsGrupo5DbContext context)
+        public AdquirientesController(InscripcionesGrupo5DbContext context)
         {
             _context = context;
         }

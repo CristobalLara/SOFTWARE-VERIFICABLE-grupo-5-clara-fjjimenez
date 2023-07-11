@@ -11,7 +11,7 @@ using SII_App_Grupo_5.Data;
 
 namespace SII_App_Grupo_5.Migrations
 {
-    [DbContext(typeof(InscriptionsGrupo5DbContext))]
+    [DbContext(typeof(InscripcionesGrupo5DbContext))]
     [Migration("20230624013625_nulosNumeroInscripcionMultipropietarios")]
     partial class nulosNumeroInscripcionMultipropietarios
     {
