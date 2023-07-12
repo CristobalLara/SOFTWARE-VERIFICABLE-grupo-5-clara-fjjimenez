@@ -64,7 +64,8 @@
                     @Html.DisplayFor(modelItem => item.NumeroInscripcion)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.NumeroInscripcion">Details</a> 
+                <a asp-action="Details" asp-route-id="@item.NumeroInscripcion">Details</a>
+                <a asp-action="BorrarInscripcion" asp-route-id="@item.Folio">Delete</a>
             </td>
         </tr>  
 }

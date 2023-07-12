@@ -268,6 +268,90 @@ namespace SII_App_Grupo_5.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult BorrarInscripcion(int? id)
+        {
+            List<Inscripcion> inscripciones = _contexto.Inscripciones.Where(i => i.Folio == id).ToList();
+
+            Inscripcion inscripcion = inscripciones[0];
+
+            Inscripcion inscripcionReferencia = inscripcion;
+
+            _contexto.Inscripciones.Remove(inscripcion);
+            _contexto.SaveChanges();
+
+            List<MultiPropietario> multipropietariosClean = _contexto.MultiPropietarios.
+                OrderBy(mp => mp.AnoInscripcion).
+                ThenBy(mp => mp.NumeroInscripcion).
+                Where(mp => mp.Comuna == inscripcionReferencia.Comuna &&
+                            mp.Manzana == inscripcionReferencia.Manzana &&
+                            mp.Predio == inscripcionReferencia.Predio).ToList();
+
+            for (int i = 0; i < multipropietariosClean.Count; i++)
+            {
+                _contexto.MultiPropietarios.Remove(multipropietariosClean[i]);
+            }
+            _contexto.SaveChanges();//a
+
+            List<Inscripcion> inscripcionesBackup = _contexto.Inscripciones.
+                OrderBy(i => i.FechaInscripcion).
+                ThenBy(i => i.Folio).
+                Where(i => i.Comuna == inscripcionReferencia.Comuna &&
+                            i.Manzana == inscripcionReferencia.Manzana &&
+                            i.Predio == inscripcionReferencia.Predio).ToList();
+
+            foreach (Inscripcion inscripcion1 in inscripcionesBackup)
+            {
+                List<string> enajenantesRut = new();
+                List<string> enajenantesPorcentajeDerecho = new();
+                List<bool> enajenantesAcreditado = new();
+
+                foreach (Enajenante enajenante in inscripcion1.Enajenantes)
+                {
+                    enajenantesRut.Add(enajenante.Rut);
+                    enajenantesPorcentajeDerecho.Add(enajenante.PorcentajeDerecho.ToString());
+                    enajenantesAcreditado.Add(enajenante.Acreditado);
+                }
+
+                string[] enajenantesRutBuffer = enajenantesRut.ToArray();
+                string[] enajenantesPorcentajeDerechoBuffer = enajenantesPorcentajeDerecho.ToArray();
+                bool[] enajenantesAcreditadoBuffer = enajenantesAcreditado.ToArray();
+
+                List<string> adquirientesRut = new();
+                List<string> adquirientesPorcentajeDerecho = new();
+                List<bool> adquirientesAcreditado = new();
+
+                foreach (Adquiriente adquiriente in inscripcion1.Adquirientes)
+                {
+                    adquirientesRut.Add(adquiriente.Rut);
+                    adquirientesPorcentajeDerecho.Add(adquiriente.PorcentajeDerecho.ToString());
+                    adquirientesAcreditado.Add(adquiriente.Acreditado);
+                }
+
+                string[] adquirientesRutBuffer = enajenantesRut.ToArray();
+                string[] adquirientesPorcentajeDerechoBuffer = enajenantesPorcentajeDerecho.ToArray();
+                bool[] adquirientesAcreditadoBuffer = enajenantesAcreditado.ToArray();
+
+                Inscripcion inscripcionNueva = new()
+                {
+                    NaturalezaEscritura = inscripcion1.NaturalezaEscritura,
+                    Manzana = inscripcion1.Manzana,
+                    Comuna = inscripcion1.Comuna,
+                    Predio = inscripcion1.Predio,
+                    FechaInscripcion = inscripcion1.FechaInscripcion,
+                    Fojas = inscripcion1.Fojas,
+                    NumeroInscripcion = inscripcion1.NumeroInscripcion
+                };
+
+                _contexto.Inscripciones.Remove(inscripcion1);
+                _contexto.SaveChanges();
+
+                Create(inscripcionNueva,
+                       adquirientesRutBuffer, adquirientesPorcentajeDerechoBuffer, adquirientesAcreditadoBuffer,
+                       enajenantesRutBuffer, enajenantesPorcentajeDerechoBuffer, enajenantesAcreditadoBuffer);
+            }
+            return RedirectToAction("Index");
+        }
+
         // Funciones Encapsuladoras
         public List<float> PorcentajeStringAFloat(string[] stringList)
         {
